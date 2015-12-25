@@ -4,15 +4,20 @@ using System;
 
 namespace DMP.Ui.Web.Common
 {
-    /// <summary> 窗体基类 </summary>
+    /// <summary>窗体基类</summary>
     public abstract class BaseForm : Page
     {
         public int SourceTag;
         public int DocumentType;
 
-        public abstract BaseModel ModelInfo { get; }
+        public abstract ModelBase ModelInfo { get; }
 
-        
+
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
 
     }
 
@@ -20,11 +25,11 @@ namespace DMP.Ui.Web.Common
     public class ReportForm : BaseForm
     { 
 
-        public override ReportModel ModelInfo
+        public override ModelBase ModelInfo
         {
             get
             {
-                throw new NotImplementedException();
+                return new ReportModel();
             }
         }
     }

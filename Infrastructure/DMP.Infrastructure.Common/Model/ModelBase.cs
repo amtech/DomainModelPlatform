@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DMP.Infrastructure.Common.Model
 {
-    public abstract class BaseModel
+    public abstract class ModelBase
     {
     }
 }

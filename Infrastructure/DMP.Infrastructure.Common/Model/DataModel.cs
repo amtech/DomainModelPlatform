@@ -6,7 +6,7 @@ using System.Text;
 namespace DMP.Infrastructure.Common.Model
 {
     /// <summary>数据源模型</summary>
-    public class DataModel : BaseModel
+    public class DataModel : ModelBase
     {
     }
 }

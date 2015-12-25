@@ -1,13 +1,10 @@
-﻿using System;
-using System.Web.UI;
+﻿using DMP.Ui.Web.Common;
+using System;
 
 namespace DMP.Ui.Web.ERP.Reports
 {
-    public partial class SalesDetailReport : Page
+    public partial class SalesDetailReport : ReportForm
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }
