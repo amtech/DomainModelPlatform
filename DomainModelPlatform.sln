@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ui", "Ui", "{A8C810E4-9E3D-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{F112C837-0F21-4483-9186-108377C14D0B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DMP.Ui.Web", "Ui\DMP.Ui.Web\DMP.Ui.Web.csproj", "{1116CC92-71F2-4758-80DB-A357AC4339A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{D99C4108-7D70-4BAF-AEE8-9332B529DCF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D99C4108-7D70-4BAF-AEE8-9332B529DCF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D99C4108-7D70-4BAF-AEE8-9332B529DCF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1116CC92-71F2-4758-80DB-A357AC4339A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1116CC92-71F2-4758-80DB-A357AC4339A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1116CC92-71F2-4758-80DB-A357AC4339A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1116CC92-71F2-4758-80DB-A357AC4339A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,5 +43,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{3F83F232-700D-4E7A-BCB5-C0F1F760FA40} = {E1277590-AECF-44AD-9282-50337C5360C0}
 		{D99C4108-7D70-4BAF-AEE8-9332B529DCF6} = {E1277590-AECF-44AD-9282-50337C5360C0}
+		{1116CC92-71F2-4758-80DB-A357AC4339A9} = {A8C810E4-9E3D-4D19-B37D-1D3BD41045CD}
 	EndGlobalSection
 EndGlobal
