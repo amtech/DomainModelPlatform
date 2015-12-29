@@ -12,7 +12,10 @@ namespace DMP.Ui.Web.ERP.Reports
             DocumentType = 1;
         }
 
-
+        protected override void AfterGetModelInfo()
+        {
+            base.AfterGetModelInfo();
+        }
 
     }
 }
