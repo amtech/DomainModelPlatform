@@ -4,6 +4,7 @@ using System;
 using Newtonsoft.Json;
 using System.IO;
 using System.Web.UI.HtmlControls;
+using DMP.Infrastructure.Common.Transfer;
 
 namespace DMP.Ui.Web.Common
 {
@@ -17,34 +18,41 @@ namespace DMP.Ui.Web.Common
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //
-
             string action = Request["action"] ?? string.Empty;
             if (!string.IsNullOrEmpty(action))
             {
+                RequestPackage reqPackage = JsonConvert.DeserializeObject<RequestPackage>(
+                                                new StreamReader(Request.InputStream).ReadToEnd());
+                ResponsePackage rspPackage = null;
                 switch (action)
                 {
                     case "get_model":
-                        object p = JsonConvert.DeserializeObject(new StreamReader(Request.InputStream).ReadToEnd());
-                        GetModelInfo();
+                        rspPackage = GetModelInfo(reqPackage);
                         break;
                 }
+
+                Response.Clear();
+                Response.ContentType = "application/json; charset=utf-8";
+                Response.Write(JsonConvert.SerializeObject(rspPackage));
+                Response.End();
             }
             else
             {
                 AddJs("~/Resources/Js/jquery-1.11.3.min.js");
                 AddJs("~/Resources/Js/BaseForm.js");
             }
-           
+
         }
 
         /// <summary> 获取模型信息 </summary>
-        private void GetModelInfo()
+        private ResponsePackage GetModelInfo(RequestPackage reqPackage)
         {
-            AfterGetModelInfo();
+            ResponsePackage rspPackage = new ResponsePackage();
+            AfterGetModelInfo(reqPackage, rspPackage);
+            return rspPackage;
         }
 
-        protected virtual void AfterGetModelInfo()
+        protected virtual void AfterGetModelInfo(RequestPackage reqPackag, ResponsePackage rspPackage)
         {
         }
 
@@ -52,9 +60,9 @@ namespace DMP.Ui.Web.Common
         /// <param name="jsPath"></param>
         protected void AddJs(string jsPath)
         {
-            HtmlGenericControl jsRef = new HtmlGenericControl(); 
-            jsRef.TagName = "script"; 
-            jsRef.Attributes.Add("type", "text/javascript"); 
+            HtmlGenericControl jsRef = new HtmlGenericControl();
+            jsRef.TagName = "script";
+            jsRef.Attributes.Add("type", "text/javascript");
             jsRef.Attributes.Add("src", ResolveUrl(Page.ResolveClientUrl(jsPath)));
             Page.Header.Controls.Add(jsRef);
         }
@@ -63,11 +71,11 @@ namespace DMP.Ui.Web.Common
         /// <param name="cssPath"></param>
         protected void AddCss(string cssPath)
         {
-            HtmlGenericControl myCss = new HtmlGenericControl(); 
-            myCss.TagName = "link"; 
-            myCss.Attributes.Add("type", "text/css"); 
-            myCss.Attributes.Add("rel", "stylesheet"); 
-            myCss.Attributes.Add("href", ResolveUrl(Page.ResolveClientUrl(cssPath))); 
+            HtmlGenericControl myCss = new HtmlGenericControl();
+            myCss.TagName = "link";
+            myCss.Attributes.Add("type", "text/css");
+            myCss.Attributes.Add("rel", "stylesheet");
+            myCss.Attributes.Add("href", ResolveUrl(Page.ResolveClientUrl(cssPath)));
             Page.Header.Controls.AddAt(0, myCss);
         }
 

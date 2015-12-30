@@ -1,5 +1,5 @@
-﻿using DMP.Ui.Web.Common;
-using System;
+﻿using DMP.Infrastructure.Common.Transfer;
+using DMP.Ui.Web.Common;
 
 namespace DMP.Ui.Web.ERP.Reports
 {
@@ -12,9 +12,9 @@ namespace DMP.Ui.Web.ERP.Reports
             DocumentType = 1;
         }
 
-        protected override void AfterGetModelInfo()
+        protected override void AfterGetModelInfo(RequestPackage reqPackag, ResponsePackage rspPackage)
         {
-            base.AfterGetModelInfo();
+            base.AfterGetModelInfo(reqPackag, rspPackage);
         }
 
     }

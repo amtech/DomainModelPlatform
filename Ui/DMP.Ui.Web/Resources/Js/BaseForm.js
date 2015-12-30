@@ -6,8 +6,8 @@
         type: 'post',
         dataType: 'json',
         contentType: 'application/json; charset=utf8',
-        success: function (data) {
-            alert("ID=" + data.ID + ";Type=" + data.Type);
+        success: function (result) {
+             
         },
         error: function (xhr) {
             alert("失败！");
@@ -15,3 +15,4 @@
     });
 
 });
+
