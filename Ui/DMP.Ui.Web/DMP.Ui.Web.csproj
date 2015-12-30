@@ -58,8 +58,9 @@
   <ItemGroup>
     <Content Include="ERP\Reports\SalesDetailReport.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="Resources\Js\BaseForm.js" />
+    <Content Include="Resources\Js\ui.form.base.js" />
     <Content Include="Resources\Js\jquery-1.11.3.min.js" />
+    <Content Include="Resources\Js\ui.form.report.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

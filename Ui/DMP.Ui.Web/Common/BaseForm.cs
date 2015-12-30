@@ -39,7 +39,7 @@ namespace DMP.Ui.Web.Common
             else
             {
                 AddJs("~/Resources/Js/jquery-1.11.3.min.js");
-                AddJs("~/Resources/Js/BaseForm.js");
+                AddJs("~/Resources/Js/ui.form.base.js");
             }
 
         }
