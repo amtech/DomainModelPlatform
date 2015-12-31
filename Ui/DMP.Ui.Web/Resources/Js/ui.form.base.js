@@ -1,12 +1,4 @@
-﻿/*该js用于实现form的基类功能*/
-
-$(document).ready(function () {
-
-    var baseForm = new BaseForm();
-    baseForm.getModelInfo();
-
-});
-
+﻿/*该js用于实现form的基类功能*/ 
 function BaseForm() {
     //添加方法
     this.getModelInfo = function () {
