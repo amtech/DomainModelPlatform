@@ -17,5 +17,21 @@ namespace ModelDesigner
         {
             InitializeComponent();
         }
+
+        /// <summary>打开文件</summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuOpenFile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "文本文件|*.*|C#文件|*.cs|所有文件|*.*"
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var fName = openFileDialog.FileName;
+            }
+        }
+
     }
 }
