@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace ModelDesigner
+namespace DMP.Infrastructure.ModelDesigner
 {
     /// <summary>主界面</summary>
     public partial class Main : BaseForm
@@ -33,5 +33,26 @@ namespace ModelDesigner
             }
         }
 
+        /// <summary>新建文件</summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuNewFile_Click(object sender, EventArgs e)
+        {
+            DesignerTool designer = new DesignerTool();
+            designer.MdiParent = this;
+            designer.WindowState = FormWindowState.Maximized;
+            designer.Show();
+        }
+
+        /// <summary>顶部菜单-项添加事件</summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuTop_ItemAdded(object sender, ToolStripItemEventArgs e)
+        {
+            if (e.Item.Text.Length == 0)
+            {
+                e.Item.Visible = false;
+            }
+        }
     }
 }

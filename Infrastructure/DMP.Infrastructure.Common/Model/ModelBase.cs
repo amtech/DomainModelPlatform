@@ -7,5 +7,7 @@ namespace DMP.Infrastructure.Common.Model
 {
     public abstract class ModelBase
     {
+        public int SourceTag { set; get; }
+        public int DocumentType { set; get; }
     }
 }
