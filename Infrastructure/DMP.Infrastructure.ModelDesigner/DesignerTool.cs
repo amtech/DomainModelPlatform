@@ -13,15 +13,24 @@ namespace DMP.Infrastructure.ModelDesigner
 {
     public partial class DesignerTool : BaseForm
     {
-        public enum FileState
+        public enum ProjectState
         {
             New,
             Editing,
             Saved
         }
 
-        /// <summary>当前文件状态</summary>
-        public FileState CurrentFileState { get; set; }
+        /// <summary>当前项目状态</summary>
+        public ProjectState CurrentProjectState { get; set; }
+
+        public enum EditState
+        {
+            UnSave,
+            Saved
+        }
+
+        /// <summary>当前文件编辑状态</summary>
+        public EditState CurrentEditState { get; set; }
 
         public int SourceTag { get; set; }
 
@@ -29,12 +38,15 @@ namespace DMP.Infrastructure.ModelDesigner
 
         public DesignerTool()
         {
+            //默认项目状态和文件编辑状态为已保存。
+            CurrentProjectState = ProjectState.Saved;
+            CurrentEditState = EditState.Saved;
             InitializeComponent();
         }
 
         private void DesignerTool_Load(object sender, EventArgs e)
         {
-            if (CurrentFileState == FileState.New)
+            if (CurrentProjectState == ProjectState.New)
             {
 
             }
@@ -69,9 +81,24 @@ namespace DMP.Infrastructure.ModelDesigner
             //报表
             if ("reports".Equals(treeModule.SelectedNode.Tag))
             {
-                ReportModel reportModel = new ReportModel();
-                pgridModelSetting.SelectedObject = reportModel;
+                treeModule.SelectedNode.Nodes.Add(new TreeNode { Text = "新建报表", Tag = "new" });
+                treeModule.SelectedNode = treeModule.SelectedNode.Nodes[treeModule.SelectedNode.Nodes.Count - 1];
+
             }
+        }
+
+
+        private void treeModule_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if ("new".Equals(e.Node.Tag))
+            {
+                if (e.Node.Parent != null && "reports".Equals(e.Node.Parent.Tag))
+                {
+                    ReportModel reportModel = new ReportModel();
+                    pgridModelSetting.SelectedObject = reportModel;
+                }
+            }
+
         }
     }
 }

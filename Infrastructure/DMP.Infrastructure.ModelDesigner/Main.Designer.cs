@@ -73,6 +73,7 @@
             this.menuNewProject.Name = "menuNewProject";
             this.menuNewProject.Size = new System.Drawing.Size(94, 22);
             this.menuNewProject.Text = "项目";
+            this.menuNewProject.Click += new System.EventHandler(this.menuNewProject_Click);
             // 
             // menuNewFile
             // 

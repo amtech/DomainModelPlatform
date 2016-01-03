@@ -9,5 +9,6 @@ namespace DMP.Infrastructure.Common.Model
     {
         public int SourceTag { set; get; }
         public int DocumentType { set; get; }
+        public string Name { set; get; }
     }
 }

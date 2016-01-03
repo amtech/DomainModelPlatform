@@ -5,9 +5,9 @@ using System.Text;
 
 namespace DMP.Infrastructure.Common.Model
 {
-    /// <summary>报表模型</summary>
-    public class ReportModel : ModelBase
+    public class Table
     {
-        public Dictionary<string, Table> Tables { get; set; }
+        public Dictionary<string, Column> Columns { get; set; }
+
     }
 }

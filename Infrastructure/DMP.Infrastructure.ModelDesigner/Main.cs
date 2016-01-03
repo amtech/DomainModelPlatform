@@ -38,10 +38,7 @@ namespace DMP.Infrastructure.ModelDesigner
         /// <param name="e"></param>
         private void menuNewFile_Click(object sender, EventArgs e)
         {
-            DesignerTool designer = new DesignerTool();
-            designer.MdiParent = this;
-            designer.WindowState = FormWindowState.Maximized;
-            designer.Show();
+            
         }
 
         /// <summary>顶部菜单-项添加事件</summary>
@@ -53,6 +50,17 @@ namespace DMP.Infrastructure.ModelDesigner
             {
                 e.Item.Visible = false;
             }
+        }
+        /// <summary>新建项目</summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuNewProject_Click(object sender, EventArgs e)
+        {
+            DesignerTool designer = new DesignerTool();
+            designer.MdiParent = this;
+            designer.WindowState = FormWindowState.Maximized;
+            designer.CurrentProjectState = DesignerTool.ProjectState.New;
+            designer.Show();
         }
     }
 }
