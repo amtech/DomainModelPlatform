@@ -30,6 +30,7 @@
         {
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("业务功能");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("报表");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("表");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DesignerTool));
             this.splitModule = new System.Windows.Forms.SplitContainer();
             this.treeModule = new System.Windows.Forms.TreeView();
@@ -105,8 +106,15 @@
             this.treeModel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeModel.Location = new System.Drawing.Point(0, 0);
             this.treeModel.Name = "treeModel";
+            treeNode3.Name = "treeTable";
+            treeNode3.Tag = "tables";
+            treeNode3.Text = "表";
+            this.treeModel.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode3});
             this.treeModel.Size = new System.Drawing.Size(302, 442);
             this.treeModel.TabIndex = 1;
+            this.treeModel.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeModel_AfterSelect);
+            this.treeModel.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeModel_NodeMouseClick);
             // 
             // pgridModelSetting
             // 
