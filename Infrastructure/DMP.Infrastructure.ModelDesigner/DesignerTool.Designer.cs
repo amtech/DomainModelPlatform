@@ -123,6 +123,7 @@
             this.pgridModelSetting.Name = "pgridModelSetting";
             this.pgridModelSetting.Size = new System.Drawing.Size(204, 442);
             this.pgridModelSetting.TabIndex = 1;
+            this.pgridModelSetting.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgridModelSetting_PropertyValueChanged);
             // 
             // toolStrip1
             // 

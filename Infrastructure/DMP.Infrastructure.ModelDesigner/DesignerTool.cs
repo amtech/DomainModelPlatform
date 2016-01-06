@@ -33,10 +33,6 @@ namespace DMP.Infrastructure.ModelDesigner
         /// <summary>当前文件编辑状态</summary>
         public EditState CurrentEditState { get; set; }
 
-        public int SourceTag { get; set; }
-
-        public int DocumentType { get; set; }
-
         public DesignerTool()
         {
             //默认项目状态和文件编辑状态为已保存。
@@ -156,7 +152,7 @@ namespace DMP.Infrastructure.ModelDesigner
         private void treeModel_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node != null)
-            { 
+            {
                 if (e.Node.Tag is Column)
                 {
                     pgridModelSetting.SelectedObject = e.Node.Tag;
@@ -164,10 +160,29 @@ namespace DMP.Infrastructure.ModelDesigner
                 else if (e.Node.Tag is Table)
                 {
                     pgridModelSetting.SelectedObject = e.Node.Tag;
-                } 
+                }
             }
 
 
+        }
+
+        /// <summary>属性窗格值改变事件</summary>
+        /// <param name="s"></param>
+        /// <param name="e"></param>
+        private void pgridModelSetting_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            if ((s as PropertyGrid).SelectedObject is Table)
+            {
+                treeModel.SelectedNode.Text = ((s as PropertyGrid).SelectedObject as Table).DisplayName;
+            }
+            else if ((s as PropertyGrid).SelectedObject is Column)
+            {
+                treeModel.SelectedNode.Text = ((s as PropertyGrid).SelectedObject as Column).DisplayName;
+            }
+            else if ((s as PropertyGrid).SelectedObject is ModelBase)
+            {
+                treeModule.SelectedNode.Text = ((s as PropertyGrid).SelectedObject as ModelBase).Name;
+            }
         }
 
     }
