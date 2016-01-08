@@ -91,6 +91,7 @@
   <ItemGroup>
     <Folder Include="Resources\Css\" />
     <Folder Include="Resources\Images\" />
+    <Folder Include="Resources\Models\ERP\Reports\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure\DMP.Infrastructure.Common\DMP.Infrastructure.Common.csproj">

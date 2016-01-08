@@ -22,9 +22,7 @@ namespace DMP.Infrastructure.Common.Model
     }
 
     public class Column
-    {
-        [BrowsableAttribute(false)]
-        public Dictionary<string, Column> Columns { get; set; }
+    { 
 
         [DescriptionAttribute("名称标识"), CategoryAttribute("基本属性")]
         public string Name { get; set; }

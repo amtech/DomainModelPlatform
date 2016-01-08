@@ -185,5 +185,31 @@ namespace DMP.Infrastructure.ModelDesigner
             }
         }
 
+        /// <summary>保存</summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (treeModule.SelectedNode != null)
+            {
+                if (treeModule.SelectedNode.Tag is ReportModel)
+                {
+                    var reportModel = treeModule.SelectedNode.Tag as ReportModel;
+                    foreach (TreeNode modelElement in treeModel.Nodes)
+                    {
+                        if ("tables".Equals(modelElement.Tag))
+                        {
+                            foreach (TreeNode table in modelElement.Nodes)
+                            {
+                                reportModel.Tables.Add((table.Tag as Table).Name, (table.Tag as Table));
+                            }
+                        }
+                    }
+
+                    string xml = XmlUtils.Serializer(typeof(ReportModel), reportModel);
+
+                }
+            }
+        }
     }
 }

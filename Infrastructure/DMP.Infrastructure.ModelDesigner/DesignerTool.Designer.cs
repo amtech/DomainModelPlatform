@@ -31,6 +31,7 @@
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("业务功能");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("报表");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("表");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("功能");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DesignerTool));
             this.splitModule = new System.Windows.Forms.SplitContainer();
             this.treeModule = new System.Windows.Forms.TreeView();
@@ -38,7 +39,7 @@
             this.treeModel = new System.Windows.Forms.TreeView();
             this.pgridModelSetting = new System.Windows.Forms.PropertyGrid();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolbtnSave = new System.Windows.Forms.ToolStripButton();
+            this.btnSave = new System.Windows.Forms.ToolStripButton();
             this.splitModule.Panel1.SuspendLayout();
             this.splitModule.Panel2.SuspendLayout();
             this.splitModule.SuspendLayout();
@@ -109,8 +110,12 @@
             treeNode3.Name = "treeTable";
             treeNode3.Tag = "tables";
             treeNode3.Text = "表";
+            treeNode4.Name = "treeFunction";
+            treeNode4.Tag = "functions";
+            treeNode4.Text = "功能";
             this.treeModel.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3});
+            treeNode3,
+            treeNode4});
             this.treeModel.Size = new System.Drawing.Size(302, 442);
             this.treeModel.TabIndex = 1;
             this.treeModel.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeModel_AfterSelect);
@@ -119,6 +124,7 @@
             // pgridModelSetting
             // 
             this.pgridModelSetting.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pgridModelSetting.ImeMode = System.Windows.Forms.ImeMode.Close;
             this.pgridModelSetting.Location = new System.Drawing.Point(0, 0);
             this.pgridModelSetting.Name = "pgridModelSetting";
             this.pgridModelSetting.Size = new System.Drawing.Size(204, 442);
@@ -128,22 +134,23 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolbtnSave});
+            this.btnSave});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(706, 25);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolbtnSave
+            // btnSave
             // 
-            this.toolbtnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolbtnSave.Image = ((System.Drawing.Image)(resources.GetObject("toolbtnSave.Image")));
-            this.toolbtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolbtnSave.Name = "toolbtnSave";
-            this.toolbtnSave.Size = new System.Drawing.Size(33, 22);
-            this.toolbtnSave.Text = "保存";
-            this.toolbtnSave.ToolTipText = "保存";
+            this.btnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
+            this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(33, 22);
+            this.btnSave.Text = "保存";
+            this.btnSave.ToolTipText = "保存";
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // DesignerTool
             // 
@@ -176,6 +183,6 @@
         private System.Windows.Forms.TreeView treeModel;
         private System.Windows.Forms.PropertyGrid pgridModelSetting;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolbtnSave;
+        private System.Windows.Forms.ToolStripButton btnSave;
     }
 }

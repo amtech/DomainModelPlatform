@@ -10,6 +10,12 @@ namespace DMP.Infrastructure.Common.Model
     public class ReportModel : ModelBase
     {
         [BrowsableAttribute(false), DefaultValueAttribute(false)]
-        public Dictionary<string, Table> Tables { get; set; }
+        public SerializableDictionary<string, Table> Tables { get; set; }
+
+        public ReportModel()
+        {
+            Tables = new SerializableDictionary<string, Table>();
+        }
+
     }
 }
