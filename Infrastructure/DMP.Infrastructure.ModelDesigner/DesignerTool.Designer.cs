@@ -82,6 +82,7 @@
             treeNode2});
             this.treeModule.Size = new System.Drawing.Size(192, 442);
             this.treeModule.TabIndex = 1;
+            this.treeModule.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeModule_BeforeSelect);
             this.treeModule.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeModule_AfterSelect);
             this.treeModule.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeModule_NodeMouseClick);
             // 

@@ -30,6 +30,8 @@ namespace DMP.Infrastructure.ModelDesigner
             Saved
         }
 
+        public ModelBase CurrentModel { get; set; }
+
         /// <summary>当前文件编辑状态</summary>
         public EditState CurrentEditState { get; set; }
 
@@ -199,17 +201,54 @@ namespace DMP.Infrastructure.ModelDesigner
                     {
                         if ("tables".Equals(modelElement.Tag))
                         {
+                            reportModel.Tables.Clear();
                             foreach (TreeNode table in modelElement.Nodes)
                             {
-                                reportModel.Tables.Add((table.Tag as Table).Name, (table.Tag as Table));
+                                reportModel.Tables.Add(table.Tag as Table);
                             }
                         }
                     }
 
-                    string xml = XmlUtils.Serializer(typeof(ReportModel), reportModel);
-
+                    string xml = XmlUtils.Serializer(reportModel);
+                    string savePath = GetSaveXmlPath();
+                    if (!string.IsNullOrEmpty(savePath))
+                    {
+                        SaveFile(xml, savePath);
+                    }
                 }
             }
+        }
+
+        /// <summary>模块选择前验证是否保存</summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void treeModule_BeforeSelect(object sender, TreeViewCancelEventArgs e)
+        {
+            var tn = e.Node;
+            //一层节点，展开，收缩等操作都不响应。
+            if (tn.Parent == null
+                || e.Action == TreeViewAction.Collapse
+                || e.Action == TreeViewAction.Expand  )
+            {
+                return;
+            }
+            switch (MessageBox.Show("单据已经修改，要保存吗？", "询问", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
+            {
+                case DialogResult.Cancel:
+                    break;
+                case DialogResult.Yes:
+                    { 
+                    }
+                    break;
+                case DialogResult.No:
+                    {
+
+                    }
+                    break;
+
+            }
+
+
         }
     }
 }

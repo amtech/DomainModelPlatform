@@ -27,11 +27,11 @@ namespace DMP.Infrastructure.Common.Model
                 }
             }
             catch (Exception e)
-            {
-
+            { 
                 return null;
             }
         }
+
         /// <summary>
         /// 反序列化
         /// </summary>
@@ -52,10 +52,10 @@ namespace DMP.Infrastructure.Common.Model
         /// <param name="type">类型</param>
         /// <param name="obj">对象</param>
         /// <returns></returns>
-        public static string Serializer(Type type, object obj)
+        public static string Serializer(object obj)
         {
             MemoryStream Stream = new MemoryStream();
-            XmlSerializer xml = new XmlSerializer(type);
+            XmlSerializer xml = new XmlSerializer(obj.GetType());
             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
             ns.Add(string.Empty, string.Empty);
             try
@@ -77,14 +77,23 @@ namespace DMP.Infrastructure.Common.Model
             return str;
         }
 
+        public static void ReadXml(string path)
+        {
+            System.IO.StreamReader myFile = new System.IO.StreamReader(path,
+                                            System.Text.Encoding.Default);
+            string myString = myFile.ReadToEnd();//myString是读出的字符串
+            myFile.Close();
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(myString);
+        }
+
     }
 
     [Serializable]
     public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, IXmlSerializable
     {
         public SerializableDictionary() { }
-
-        public void WriteXml(XmlWriter write)       // Serializer
+        public void WriteXml(XmlWriter write)       // Serializer 
         {
             XmlSerializer KeySerializer = new XmlSerializer(typeof(TKey));
             XmlSerializer ValueSerializer = new XmlSerializer(typeof(TValue));
@@ -108,7 +117,6 @@ namespace DMP.Infrastructure.Common.Model
             reader.Read();
             XmlSerializer KeySerializer = new XmlSerializer(typeof(TKey));
             XmlSerializer ValueSerializer = new XmlSerializer(typeof(TValue));
-
             while (reader.NodeType != XmlNodeType.EndElement)
             {
                 reader.ReadStartElement("SerializableDictionary");
@@ -119,17 +127,14 @@ namespace DMP.Infrastructure.Common.Model
                 TValue vl = (TValue)ValueSerializer.Deserialize(reader);
                 reader.ReadEndElement();
                 reader.ReadEndElement();
-                this.Add(tk, vl);
+                Add(tk, vl);
                 reader.MoveToContent();
             }
             reader.ReadEndElement();
-
         }
         public XmlSchema GetSchema()
         {
             return null;
         }
-
     }
-
 }
