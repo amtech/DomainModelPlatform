@@ -1,6 +1,6 @@
 ﻿using DMP.Infrastructure.Common;
 using DMP.Infrastructure.Common.Model;
-using ModelDesigner.Common;
+using DMP.Infrastructure.ModelDesigner.Common; 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -232,6 +232,8 @@ namespace DMP.Infrastructure.ModelDesigner
             {
                 return;
             }
+            //如果当前没有编辑的模型就没有提示
+            if (CurrentModel == null) return;
             switch (MessageBox.Show("单据已经修改，要保存吗？", "询问", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
             {
                 case DialogResult.Cancel:

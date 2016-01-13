@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Windows.Forms;
 
-namespace ModelDesigner.Common
+namespace DMP.Infrastructure.ModelDesigner.Common
 {
     public class BaseForm : Form
     {
@@ -12,7 +12,7 @@ namespace ModelDesigner.Common
 
         public string GetSaveXmlPath()
         {
-            SaveFileDialog sfd = new SaveFileDialog(); 
+            SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = "xml文件(*.xml)|";
             if (sfd.ShowDialog() == DialogResult.OK)
             {
@@ -27,6 +27,9 @@ namespace ModelDesigner.Common
             _StreamWriter.Write(p_Text);
             _StreamWriter.Close();
         }
+
+        
+
 
     }
 }
