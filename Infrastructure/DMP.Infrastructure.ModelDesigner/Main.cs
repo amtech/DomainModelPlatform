@@ -59,10 +59,12 @@ namespace DMP.Infrastructure.ModelDesigner
             string prjPath = Utils.NewProject();
             if (!string.IsNullOrEmpty(prjPath))
             {
-                DesignerTool designer = new DesignerTool();
-                designer.MdiParent = this;
-                designer.WindowState = FormWindowState.Maximized;
-                designer.CurrentProjectState = DesignerTool.ProjectState.New;
+                DesignerTool designer = new DesignerTool
+                {
+                    ProjectFilePath = prjPath,
+                    MdiParent = this,
+                    WindowState = FormWindowState.Maximized
+                };
                 designer.Show();
             }
 

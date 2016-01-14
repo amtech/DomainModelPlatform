@@ -10,9 +10,8 @@ namespace DMP.Infrastructure.ModelDesigner.Common
 {
     public class Utils
     {
-
+        //项目文件后缀
         public const string ProjectFilePostfix = ".mprj";
-
 
         /// <summary>新建项目</summary>
         public static string NewProject()
@@ -44,15 +43,12 @@ namespace DMP.Infrastructure.ModelDesigner.Common
                 doc.Save(fullName);
 
                 if (Directory.Exists(projectFolder) == false)//如果不存在就创建file文件夹{
-                    Directory.CreateDirectory(projectFolder);
-
-
+                    Directory.CreateDirectory(projectFolder); 
                 return fullName;
             }
             return string.Empty;
         }
-
-
+         
         public static string SelectFolder()
         {
             FolderBrowserDialog path = new FolderBrowserDialog();

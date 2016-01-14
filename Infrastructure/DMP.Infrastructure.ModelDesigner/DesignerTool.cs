@@ -1,6 +1,6 @@
 ﻿using DMP.Infrastructure.Common;
 using DMP.Infrastructure.Common.Model;
-using DMP.Infrastructure.ModelDesigner.Common; 
+using DMP.Infrastructure.ModelDesigner.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,15 +14,14 @@ namespace DMP.Infrastructure.ModelDesigner
 {
     public partial class DesignerTool : BaseForm
     {
+        public string ProjectFilePath { get; set; }
+
         public enum ProjectState
         {
             New,
             Editing,
             Saved
-        }
-
-        /// <summary>当前项目状态</summary>
-        public ProjectState CurrentProjectState { get; set; }
+        } 
 
         public enum EditState
         {
@@ -228,7 +227,7 @@ namespace DMP.Infrastructure.ModelDesigner
             //一层节点，展开，收缩等操作都不响应。
             if (tn.Parent == null
                 || e.Action == TreeViewAction.Collapse
-                || e.Action == TreeViewAction.Expand  )
+                || e.Action == TreeViewAction.Expand)
             {
                 return;
             }
@@ -239,7 +238,7 @@ namespace DMP.Infrastructure.ModelDesigner
                 case DialogResult.Cancel:
                     break;
                 case DialogResult.Yes:
-                    { 
+                    {
                     }
                     break;
                 case DialogResult.No:
