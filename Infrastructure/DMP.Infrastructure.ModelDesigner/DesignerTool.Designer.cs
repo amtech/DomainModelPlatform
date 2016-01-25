@@ -1,4 +1,6 @@
-﻿namespace DMP.Infrastructure.ModelDesigner
+﻿using DMP.Infrastructure.ModelDesigner.Common;
+
+namespace DMP.Infrastructure.ModelDesigner
 {
     partial class DesignerTool
     {
@@ -28,25 +30,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("业务功能");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("报表");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("表");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("功能");
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("表");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DesignerTool));
             this.splitModule = new System.Windows.Forms.SplitContainer();
-            this.treeModule = new System.Windows.Forms.TreeView();
+            this.treeModule = new DMP.Infrastructure.ModelDesigner.Common.TreeViewEx();
             this.splitModel = new System.Windows.Forms.SplitContainer();
-            this.treeModel = new System.Windows.Forms.TreeView();
+            this.treeModel = new DMP.Infrastructure.ModelDesigner.Common.TreeViewEx();
             this.pgridModelSetting = new System.Windows.Forms.PropertyGrid();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.menuOperator = new System.Windows.Forms.ToolStrip();
             this.btnSave = new System.Windows.Forms.ToolStripButton();
+            this.nodeRightMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.rmenuAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.rmenuDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.splitModule.Panel1.SuspendLayout();
             this.splitModule.Panel2.SuspendLayout();
             this.splitModule.SuspendLayout();
             this.splitModel.Panel1.SuspendLayout();
             this.splitModel.Panel2.SuspendLayout();
             this.splitModel.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
+            this.menuOperator.SuspendLayout();
+            this.nodeRightMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitModule
@@ -71,20 +75,11 @@
             this.treeModule.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeModule.Location = new System.Drawing.Point(0, 0);
             this.treeModule.Name = "treeModule";
-            treeNode1.Name = "treeDocuments";
-            treeNode1.Tag = "documents";
-            treeNode1.Text = "业务功能";
-            treeNode2.Name = "treeReports";
-            treeNode2.Tag = "reports";
-            treeNode2.Text = "报表";
-            this.treeModule.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
             this.treeModule.Size = new System.Drawing.Size(192, 442);
             this.treeModule.TabIndex = 1;
-            this.treeModule.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeModule_BeforeSelect);
-            this.treeModule.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeModule_AfterSelect);
-            this.treeModule.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeModule_NodeMouseClick);
+            this.treeModule.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.TreeViewBeforeSelect);
+            this.treeModule.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeNodeAfterSelect);
+            this.treeModule.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeNodeMouseClick);
             // 
             // splitModel
             // 
@@ -108,19 +103,15 @@
             this.treeModel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeModel.Location = new System.Drawing.Point(0, 0);
             this.treeModel.Name = "treeModel";
-            treeNode3.Name = "treeTable";
-            treeNode3.Tag = "tables";
-            treeNode3.Text = "表";
-            treeNode4.Name = "treeFunction";
-            treeNode4.Tag = "functions";
-            treeNode4.Text = "功能";
+            treeNode1.Name = "treeNodeTables";
+            treeNode1.Tag = "tables";
+            treeNode1.Text = "表";
             this.treeModel.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode4});
+            treeNode1});
             this.treeModel.Size = new System.Drawing.Size(302, 442);
             this.treeModel.TabIndex = 1;
-            this.treeModel.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeModel_AfterSelect);
-            this.treeModel.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeModel_NodeMouseClick);
+            this.treeModel.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeNodeAfterSelect);
+            this.treeModel.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeNodeMouseClick);
             // 
             // pgridModelSetting
             // 
@@ -130,17 +121,16 @@
             this.pgridModelSetting.Name = "pgridModelSetting";
             this.pgridModelSetting.Size = new System.Drawing.Size(204, 442);
             this.pgridModelSetting.TabIndex = 1;
-            this.pgridModelSetting.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgridModelSetting_PropertyValueChanged);
+            this.pgridModelSetting.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PropertyGridPropertyValueChanged);
             // 
-            // toolStrip1
+            // menuOperator
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuOperator.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnSave});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(706, 25);
-            this.toolStrip1.TabIndex = 3;
-            this.toolStrip1.Text = "toolStrip1";
+            this.menuOperator.Location = new System.Drawing.Point(0, 0);
+            this.menuOperator.Name = "menuOperator";
+            this.menuOperator.Size = new System.Drawing.Size(706, 25);
+            this.menuOperator.TabIndex = 3;
             // 
             // btnSave
             // 
@@ -153,13 +143,36 @@
             this.btnSave.ToolTipText = "保存";
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // nodeRightMenu
+            // 
+            this.nodeRightMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rmenuAdd,
+            this.rmenuDelete});
+            this.nodeRightMenu.Name = "nodeRightMenu";
+            this.nodeRightMenu.Size = new System.Drawing.Size(95, 48);
+            // 
+            // rmenuAdd
+            // 
+            this.rmenuAdd.Name = "rmenuAdd";
+            this.rmenuAdd.Size = new System.Drawing.Size(94, 22);
+            this.rmenuAdd.Tag = "add";
+            this.rmenuAdd.Text = "新增";
+            this.rmenuAdd.Click += new System.EventHandler(this.RightMenuClick);
+            // 
+            // rmenuDelete
+            // 
+            this.rmenuDelete.Name = "rmenuDelete";
+            this.rmenuDelete.Size = new System.Drawing.Size(94, 22);
+            this.rmenuDelete.Tag = "delete";
+            this.rmenuDelete.Text = "删除";
+            // 
             // DesignerTool
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(706, 467);
             this.Controls.Add(this.splitModule);
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.menuOperator);
             this.Name = "DesignerTool";
             this.Text = "ModelDesigner";
             this.Load += new System.EventHandler(this.DesignerTool_Load);
@@ -169,8 +182,9 @@
             this.splitModel.Panel1.ResumeLayout(false);
             this.splitModel.Panel2.ResumeLayout(false);
             this.splitModel.ResumeLayout(false);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.menuOperator.ResumeLayout(false);
+            this.menuOperator.PerformLayout();
+            this.nodeRightMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -179,11 +193,14 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitModule;
-        private System.Windows.Forms.TreeView treeModule;
+        private TreeViewEx treeModule;
         private System.Windows.Forms.SplitContainer splitModel;
-        private System.Windows.Forms.TreeView treeModel;
+        private TreeViewEx treeModel;
         private System.Windows.Forms.PropertyGrid pgridModelSetting;
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStrip menuOperator;
         private System.Windows.Forms.ToolStripButton btnSave;
+        private System.Windows.Forms.ContextMenuStrip nodeRightMenu;
+        private System.Windows.Forms.ToolStripMenuItem rmenuAdd;
+        private System.Windows.Forms.ToolStripMenuItem rmenuDelete;
     }
 }

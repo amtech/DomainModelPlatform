@@ -14,5 +14,7 @@ namespace DMP.Infrastructure.Common.Model
         public int DocumentType { set; get; }
         [XmlAttribute("Name")]
         public string Name { set; get; }
+        [XmlAttribute("DisplayName")]
+        public string DisplayName { set; get; }
     }
 }

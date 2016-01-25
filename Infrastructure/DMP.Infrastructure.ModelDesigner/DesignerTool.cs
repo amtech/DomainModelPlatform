@@ -4,185 +4,190 @@ using DMP.Infrastructure.ModelDesigner.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml;
+using DMP.Infrastructure.Common.Xml;
 
 namespace DMP.Infrastructure.ModelDesigner
 {
     public partial class DesignerTool : BaseForm
     {
+
+        #region Members 
+
+        /// <summary>当前项目mprj文件xml结构</summary>
+        private readonly XmlDocumentEx _projectContent = new XmlDocumentEx();
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>项目文件路径</summary>
         public string ProjectFilePath { get; set; }
-
-        public enum ProjectState
-        {
-            New,
-            Editing,
-            Saved
-        } 
-
-        public enum EditState
-        {
-            UnSave,
-            Saved
-        }
 
         public ModelBase CurrentModel { get; set; }
 
-        /// <summary>当前文件编辑状态</summary>
-        public EditState CurrentEditState { get; set; }
+        #endregion
+
+        #region Constructs
 
         public DesignerTool()
         {
-            //默认项目状态和文件编辑状态为已保存。
-            CurrentProjectState = ProjectState.Saved;
-            CurrentEditState = EditState.Saved;
-
             InitializeComponent();
             //不隐藏选中节点
             treeModel.HideSelection = treeModule.HideSelection = false;
         }
 
+        #endregion
+
         private void DesignerTool_Load(object sender, EventArgs e)
         {
-            if (CurrentProjectState == ProjectState.New)
+            if (!string.IsNullOrEmpty(ProjectFilePath))
             {
-
+                _projectContent.Load(ProjectFilePath); //加载xml文件
             }
+            InitTreeModule();
         }
 
-        /// <summary>模块功能树形列表-节点鼠标点击事件</summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void treeModule_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        /// <summary>初始化模块信息的树形控件</summary>
+        private void InitTreeModule()
         {
-
-            if (e.Node == null) return; //无节点
-            treeModule.SelectedNode = e.Node;
-            if (e.Button == MouseButtons.Right)
+            if (_projectContent != null)
             {
-                ContextMenuStrip rightMenu = new ContextMenuStrip();
-                ToolStripMenuItem tmiEditRoutStation = new ToolStripMenuItem("新建");
-                tmiEditRoutStation.Click += ModuleRightMenu_Click;
-                rightMenu.Items.Add(tmiEditRoutStation);
-                rightMenu.Show(treeModule, e.X, e.Y);
-            }
-            else
-            { }
-
-        }
-
-        /// <summary>右键菜单-模块</summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ModuleRightMenu_Click(object sender, EventArgs e)
-        {
-            //报表
-            if ("reports".Equals(treeModule.SelectedNode.Tag))
-            {
-                treeModule.SelectedNode.Nodes.Add(new TreeNode { Text = "新建报表", Tag = new ReportModel() });
-                treeModule.SelectedNode = treeModule.SelectedNode.Nodes[treeModule.SelectedNode.Nodes.Count - 1];
-
-            }
-        }
-
-        /// <summary>tree-模块选中后</summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void treeModule_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            if (e.Node != null)
-            {
-                if (e.Node.Tag is ReportModel)
+                treeModule.Nodes.Clear();
+                if (_projectContent.DocumentElement != null)
                 {
-                    if (e.Node.Parent != null && "reports".Equals(e.Node.Parent.Tag))
+                    foreach (XmlNode xmlNode in _projectContent.DocumentElement.ChildNodes)
                     {
-                        pgridModelSetting.SelectedObject = e.Node.Tag as ReportModel;
+                        if (StaticValue.PrjNodesNameMapping.Keys.Contains(xmlNode.Name))
+                        {
+                            TreeNode treeNode = new TreeNode
+                            {
+                                Text = StaticValue.PrjNodesNameMapping[xmlNode.Name],
+                                Tag = xmlNode.Name
+                            };
+                            treeModule.Nodes.Add(treeNode);
+                        }
                     }
                 }
             }
         }
 
-        /// <summary>右键菜单-模型</summary>
+        /// <summary>TreeNode AfterSelect事件</summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void treeModel_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            if (e.Node == null) return; //无节点
-            treeModel.SelectedNode = e.Node;
-            if (e.Button == MouseButtons.Right)
-            {
-                if ("tables".Equals(treeModel.SelectedNode.Tag) || treeModel.SelectedNode.Tag is Table)
-                {
-                    ContextMenuStrip rightMenu = new ContextMenuStrip();
-                    ToolStripMenuItem tmiEditRoutStation = new ToolStripMenuItem("新建");
-                    tmiEditRoutStation.Click += ModelRightMenu_Click;
-                    rightMenu.Items.Add(tmiEditRoutStation);
-                    rightMenu.Show(treeModel, e.X, e.Y);
-                }
-            }
-            else
-            { }
-
-        }
-
-        /// <summary>模型-右键按钮点击</summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ModelRightMenu_Click(object sender, EventArgs e)
-        {
-            //表
-            if ("tables".Equals(treeModel.SelectedNode.Tag))
-            {
-                treeModel.SelectedNode.Nodes.Add(new TreeNode { Text = "新建表", Tag = new Table() });
-                treeModel.SelectedNode = treeModel.SelectedNode.Nodes[treeModel.SelectedNode.Nodes.Count - 1];
-            }
-            else if (treeModel.SelectedNode.Tag is Table)
-            {
-                treeModel.SelectedNode.Nodes.Add(new TreeNode { Text = "新建字段", Tag = new Column() });
-                treeModel.SelectedNode = treeModel.SelectedNode.Nodes[treeModel.SelectedNode.Nodes.Count - 1];
-            }
-
-        }
-
-        /// <summary>tree-模型选中后</summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void treeModel_AfterSelect(object sender, TreeViewEventArgs e)
+        private void TreeNodeAfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node != null)
             {
-                if (e.Node.Tag is Column)
+
+            }
+        }
+
+        /// <summary>PropertyGrid PropertyValueChanged 事件</summary>
+        /// <param name="s"></param>
+        /// <param name="e"></param>
+        private void PropertyGridPropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            PropertyGrid propertyGrid = (s as PropertyGrid);
+            if (propertyGrid != null && propertyGrid.SelectedObject != null)
+            {
+                if (propertyGrid.SelectedObject is Table)
                 {
-                    pgridModelSetting.SelectedObject = e.Node.Tag;
+                    treeModel.SelectedNode.Text = ((Table)propertyGrid.SelectedObject).DisplayName;
                 }
-                else if (e.Node.Tag is Table)
+                else if (propertyGrid.SelectedObject is Column)
                 {
-                    pgridModelSetting.SelectedObject = e.Node.Tag;
+                    treeModel.SelectedNode.Text = ((Column)propertyGrid.SelectedObject).DisplayName;
+                }
+                else if (propertyGrid.SelectedObject is ModelBase)
+                {
+                    treeModule.SelectedNode.Text = ((ModelBase)propertyGrid.SelectedObject).Name;
                 }
             }
+        }
 
+        /// <summary>TreeView BeforeSelect</summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TreeViewBeforeSelect(object sender, TreeViewCancelEventArgs e)
+        {
+            TreeView treeView = sender as TreeView;
+            if (treeView == null) return;
+            if (treeView.Name == treeModule.Name)
+            {
+                var tn = e.Node;
+                //一层节点，展开，收缩等操作都不响应。
+                if (tn.Parent == null
+                    || e.Action == TreeViewAction.Collapse
+                    || e.Action == TreeViewAction.Expand)
+                {
+                    return;
+                }
+                //如果当前没有编辑的模型就没有提示
+                if (CurrentModel == null) return;
+                switch (MessageBox.Show("单据已经修改，要保存吗？", "询问", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
+                {
+                    case DialogResult.Cancel:
+                        break;
+                    case DialogResult.Yes:
+                        {
+                        }
+                        break;
+                    case DialogResult.No:
+                        {
+
+                        }
+                        break;
+                }
+            }
 
         }
 
-        /// <summary>属性窗格值改变事件</summary>
-        /// <param name="s"></param>
+        /// <summary>树形节点click事件</summary>
+        /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void pgridModelSetting_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        private void TreeNodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if ((s as PropertyGrid).SelectedObject is Table)
+            if (e.Node == null) return; //无节点 
+            if (e.Button == MouseButtons.Right)
             {
-                treeModel.SelectedNode.Text = ((s as PropertyGrid).SelectedObject as Table).DisplayName;
+                TreeViewEx treeView = sender as TreeViewEx;
+                if (treeView != null)
+                {
+                    treeView.SelectedNode = e.Node;
+                }
+                nodeRightMenu.Tag = e.Node.Tag;
+                nodeRightMenu.Show(treeView, e.X, e.Y);
             }
-            else if ((s as PropertyGrid).SelectedObject is Column)
+        }
+
+        /// <summary>右键菜单项click事件</summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RightMenuClick(object sender, EventArgs e)
+        {
+            var toolStripDropDownItem = sender as ToolStripDropDownItem;
+            if (toolStripDropDownItem != null)
             {
-                treeModel.SelectedNode.Text = ((s as PropertyGrid).SelectedObject as Column).DisplayName;
-            }
-            else if ((s as PropertyGrid).SelectedObject is ModelBase)
-            {
-                treeModule.SelectedNode.Text = ((s as PropertyGrid).SelectedObject as ModelBase).Name;
+                switch (toolStripDropDownItem.Tag.ToString())
+                {
+                    case StaticValue.Add:
+                        {
+                            if (StaticValue.PrjReportsNodeName.Equals(nodeRightMenu.Tag.ToString()))
+                            {
+                                CreateNewReportModel();
+                            }
+                        }
+                        break;
+                    case StaticValue.Delete:
+                        break;
+                }
             }
         }
 
@@ -191,6 +196,14 @@ namespace DMP.Infrastructure.ModelDesigner
         /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
+            if (_projectContent.IsEditing)
+            {
+                if (Confirm("是否保存项目？"))
+                {
+                    _projectContent.Save(ProjectFilePath);
+                }
+            }
+            /*
             if (treeModule.SelectedNode != null)
             {
                 if (treeModule.SelectedNode.Tag is ReportModel)
@@ -216,40 +229,70 @@ namespace DMP.Infrastructure.ModelDesigner
                     }
                 }
             }
+            */
         }
 
-        /// <summary>模块选择前验证是否保存</summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void treeModule_BeforeSelect(object sender, TreeViewCancelEventArgs e)
+
+        private void CreateNewReportModel()
         {
-            var tn = e.Node;
-            //一层节点，展开，收缩等操作都不响应。
-            if (tn.Parent == null
-                || e.Action == TreeViewAction.Collapse
-                || e.Action == TreeViewAction.Expand)
+            //todo:新增一个报表模型文件。 
+            var newModelDialog = new NewModelDialog();
+            newModelDialog.NewModelType = EnumValue.ModelType.Report;
+            if (newModelDialog.ShowDialog() == DialogResult.OK)
             {
-                return;
+                //todo:往项目文件里面加一个节点。 
+                XmlElement xmlElement = _projectContent.CreateElement(newModelDialog.Model.Name);
+                xmlElement.SetAttribute("DisplayName", newModelDialog.Model.DisplayName);
+                if (_projectContent.DocumentElement != null)
+                {
+                    xmlElement.SetAttribute("Path", _projectContent.DocumentElement.GetAttribute("Folder") + newModelDialog.Model.Name + ".xml");
+                }
+                XmlNode reportsXmlNode = _projectContent.SelectSingleNode("/Project/Reports");
+                if (reportsXmlNode != null)
+                {
+                    reportsXmlNode.AppendChild(xmlElement);
+                }
+                CurrentModel = newModelDialog.Model;
+                //todo:更新树形控件。
+                TreeNode reportsNode = treeModule.GetTreeNodeByTag("reports");
+                if (reportsNode != null)
+                {
+                    reportsNode.Nodes.Add(new TreeNode { Text = CurrentModel.DisplayName, Tag = CurrentModel.SourceTag.ToString() + "," + CurrentModel.DocumentType.ToString() });
+                    treeModule.SelectedNode = reportsNode.Nodes[reportsNode.Nodes.Count - 1];
+                }
+                ReportModelToTreeView();
+
+
             }
-            //如果当前没有编辑的模型就没有提示
-            if (CurrentModel == null) return;
-            switch (MessageBox.Show("单据已经修改，要保存吗？", "询问", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
-            {
-                case DialogResult.Cancel:
-                    break;
-                case DialogResult.Yes:
-                    {
-                    }
-                    break;
-                case DialogResult.No:
-                    {
-
-                    }
-                    break;
-
-            }
-
-
         }
+
+        private void ReportModelToTreeView()
+        { 
+            TreeNode tablesNode = treeModel.GetTreeNodeByTag("tables");
+
+            if (CurrentModel != null)
+            {
+                foreach (Table tbl in (CurrentModel as ReportModel).Tables)
+                {
+                    TreeNode tableNode = new TreeNode
+                    {
+                        Text = tbl.DisplayName,
+                        Tag = tbl.Name
+                    };
+
+                    tablesNode.Nodes.Add(tableNode);
+
+                    foreach (Column col in tbl.Columns)
+                    {
+                        TreeNode columnNode = new TreeNode
+                        {
+                            Text = col.DisplayName,
+                            Tag = col.Name
+                        };
+                    }
+                }
+            }
+        }
+
     }
 }

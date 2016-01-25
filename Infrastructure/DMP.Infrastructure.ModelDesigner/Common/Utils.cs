@@ -32,27 +32,41 @@ namespace DMP.Infrastructure.ModelDesigner.Common
                 rootProject.SetAttribute("DisplayName", sfd.DisplayName);
                 doc.AppendChild(rootProject);
                 //业务功能
-                XmlElement businessFunctions = doc.CreateElement("BusinessFunctions");
+                XmlElement businessFunctions = doc.CreateElement(StaticValue.PrjBusinessNodeName);
                 rootProject.AppendChild(businessFunctions);
 
                 //报表
-                XmlElement reports = doc.CreateElement("Reports");
+                XmlElement reports = doc.CreateElement(StaticValue.PrjReportsNodeName);
                 rootProject.AppendChild(reports);
 
                 //Business 
                 doc.Save(fullName);
 
                 if (Directory.Exists(projectFolder) == false)//如果不存在就创建file文件夹{
-                    Directory.CreateDirectory(projectFolder); 
+                    Directory.CreateDirectory(projectFolder);
                 return fullName;
             }
             return string.Empty;
         }
-         
+
+        /// <summary>打开项目</summary>
+        public static string OpenProject()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = string.Format("项目文件(*{0})|*{0}", ProjectFilePostfix)
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                return openFileDialog.FileName;
+            }
+            return string.Empty;
+        }
+
         public static string SelectFolder()
         {
             FolderBrowserDialog path = new FolderBrowserDialog();
-
+            path.SelectedPath = AppDomain.CurrentDomain.BaseDirectory;
             if (path.ShowDialog() == DialogResult.OK)
             {
                 return path.SelectedPath;

@@ -22,15 +22,7 @@ namespace DMP.Infrastructure.ModelDesigner
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void menuOpenFile_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                Filter = "文本文件|*.*|C#文件|*.cs|所有文件|*.*"
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                var fName = openFileDialog.FileName;
-            }
+        { 
         }
 
         /// <summary>新建文件</summary>
@@ -51,6 +43,7 @@ namespace DMP.Infrastructure.ModelDesigner
                 e.Item.Visible = false;
             }
         }
+
         /// <summary>新建项目</summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -66,8 +59,25 @@ namespace DMP.Infrastructure.ModelDesigner
                     WindowState = FormWindowState.Maximized
                 };
                 designer.Show();
-            }
+            } 
+        }
 
+        /// <summary>打开项目</summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuOpenProject_Click(object sender, EventArgs e)
+        {
+            string prjPath = Utils.OpenProject();
+            if (!string.IsNullOrEmpty(prjPath))
+            {
+                DesignerTool designer = new DesignerTool
+                {
+                    ProjectFilePath = prjPath,
+                    MdiParent = this,
+                    WindowState = FormWindowState.Maximized
+                };
+                designer.Show();
+            } 
         }
     }
 }

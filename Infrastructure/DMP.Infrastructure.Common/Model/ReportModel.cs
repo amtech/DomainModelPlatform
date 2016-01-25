@@ -9,12 +9,8 @@ using System.Xml.Serialization;
 namespace DMP.Infrastructure.Common.Model
 {
     /// <summary>报表模型</summary>
-    public class ReportModel : ModelBase
-    {
-
-        [BrowsableAttribute(false), DefaultValueAttribute(false)]
-        public List<Table> Tables { get; set; }
-
+    public class ReportModel : DataModel
+    { 
         public ReportModel()
         {
             Tables = new List<Table>();

@@ -65,7 +65,7 @@
             this.menuNewProject,
             this.menuNewFile});
             this.menuNew.Name = "menuNew";
-            this.menuNew.Size = new System.Drawing.Size(94, 22);
+            this.menuNew.Size = new System.Drawing.Size(152, 22);
             this.menuNew.Text = "新建";
             // 
             // menuNewProject
@@ -85,24 +85,25 @@
             // menuOpen
             // 
             this.menuOpen.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuOpenFile,
-            this.menuOpenProject});
+            this.menuOpenProject,
+            this.menuOpenFile});
             this.menuOpen.Name = "menuOpen";
-            this.menuOpen.Size = new System.Drawing.Size(94, 22);
+            this.menuOpen.Size = new System.Drawing.Size(152, 22);
             this.menuOpen.Text = "打开";
             // 
             // menuOpenFile
             // 
             this.menuOpenFile.Name = "menuOpenFile";
-            this.menuOpenFile.Size = new System.Drawing.Size(94, 22);
+            this.menuOpenFile.Size = new System.Drawing.Size(152, 22);
             this.menuOpenFile.Text = "文件";
             this.menuOpenFile.Click += new System.EventHandler(this.menuOpenFile_Click);
             // 
             // menuOpenProject
             // 
             this.menuOpenProject.Name = "menuOpenProject";
-            this.menuOpenProject.Size = new System.Drawing.Size(94, 22);
+            this.menuOpenProject.Size = new System.Drawing.Size(152, 22);
             this.menuOpenProject.Text = "项目";
+            this.menuOpenProject.Click += new System.EventHandler(this.menuOpenProject_Click);
             // 
             // statusBottom
             // 

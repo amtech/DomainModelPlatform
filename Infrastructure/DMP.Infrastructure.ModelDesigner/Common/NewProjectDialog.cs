@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace DMP.Infrastructure.ModelDesigner.Common
 {
@@ -20,6 +21,7 @@ namespace DMP.Infrastructure.ModelDesigner.Common
         public NewProjectDialog()
         {
             InitializeComponent();
+            txtFolder.Text = AppDomain.CurrentDomain.BaseDirectory;
         }
 
         private void btnSetPath_Click(object sender, EventArgs e)

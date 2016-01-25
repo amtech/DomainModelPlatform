@@ -28,7 +28,16 @@ namespace DMP.Infrastructure.ModelDesigner.Common
             _StreamWriter.Close();
         }
 
-        
+        protected void Alert(string msg)
+        {
+            MessageBox.Show(msg, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        protected bool Confirm(string msg)
+        {
+            DialogResult dr = MessageBox.Show("确定要退出吗?", "退出系统", MessageBoxButtons.OKCancel);
+            return dr == DialogResult.OK;
+        }
 
 
     }
