@@ -8,6 +8,7 @@ namespace DMP.Infrastructure.ModelDesigner.Common
         public BaseForm()
         {
             ShowIcon = false;
+            StartPosition = FormStartPosition.CenterScreen;
         }
 
         public string GetSaveXmlPath()

@@ -107,7 +107,7 @@ namespace DMP.Infrastructure.ModelDesigner
                 }
                 else if (propertyGrid.SelectedObject is ModelBase)
                 {
-                    treeModule.SelectedNode.Text = ((ModelBase)propertyGrid.SelectedObject).Name;
+                    treeModule.SelectedNode.Text = ((ModelBase)propertyGrid.SelectedObject).DisplayName;
                 }
             }
         }
@@ -183,6 +183,13 @@ namespace DMP.Infrastructure.ModelDesigner
                             {
                                 CreateNewReportModel();
                             }
+                            else if (StaticValue.ModelTablesNodeName.Equals(nodeRightMenu.Tag.ToString()))
+                            {
+                                CreateNewTable();
+                            }
+                            else if (StaticValue.ModelColumnsNodeName.Equals(nodeRightMenu.Tag.ToString()))
+                            {
+                            }
                         }
                         break;
                     case StaticValue.Delete:
@@ -232,7 +239,7 @@ namespace DMP.Infrastructure.ModelDesigner
             */
         }
 
-
+        /// <summary>新建报表模型</summary>
         private void CreateNewReportModel()
         {
             //todo:新增一个报表模型文件。 
@@ -261,35 +268,64 @@ namespace DMP.Infrastructure.ModelDesigner
                     treeModule.SelectedNode = reportsNode.Nodes[reportsNode.Nodes.Count - 1];
                 }
                 ReportModelToTreeView();
-
-
+                pgridModelSetting.SelectedObject = CurrentModel;
             }
         }
 
+        /// <summary>新建数据表</summary>
+        private void CreateNewTable()
+        {
+            //todo:创建表对象
+            Table tblNew = new Table { Name = "NewTable", DisplayName = "新建表" };
+            //todo:树形控件增加一个表节点
+            TreeNode tnNewTable = new TreeNode { Text = tblNew.DisplayName, Tag = tblNew.Name };
+            treeModel.SelectedNode.Nodes.Add(tnNewTable);
+            //todo:表节点底下加一个字段根节点
+            tnNewTable.Nodes.Add(new TreeNode { Text = StaticValue.ModelColumnsNodeDisplayName, Tag = StaticValue.ModelColumnsNodeName }); 
+            //todo:当前模型对象添加table对象 
+            if (CurrentModel is ReportModel)
+            {
+                (CurrentModel as ReportModel).Tables.Add(tblNew);
+                //todo:属性窗口对象绑定当前新增的table对象。
+                pgridModelSetting.SelectedObject = (CurrentModel as ReportModel).Tables[(CurrentModel as ReportModel).Tables.Count - 1];
+            }
+
+        }
+
+        /// <summary>新建数据表</summary>
+        private void CreateNewColumn()
+        {
+             //todo:
+        }
+
+        /// <summary>将报表模型转成树状控件</summary>
         private void ReportModelToTreeView()
-        { 
-            TreeNode tablesNode = treeModel.GetTreeNodeByTag("tables");
+        {
+            TreeNode tablesNode = treeModel.GetTreeNodeByTag("Tables");
 
             if (CurrentModel != null)
             {
-                foreach (Table tbl in (CurrentModel as ReportModel).Tables)
+                tablesNode =
+                    new TreeNode { Text = StaticValue.ModelTablesNodeDisplayName, Tag = StaticValue.ModelTablesNodeName };
+                treeModel.Nodes.Add(tablesNode);
+            }
+
+            foreach (Table tbl in (CurrentModel as ReportModel).Tables)
+            {
+                TreeNode tableNode = new TreeNode
                 {
-                    TreeNode tableNode = new TreeNode
+                    Text = tbl.DisplayName,
+                    Tag = tbl.Name
+                };
+                tablesNode.Nodes.Add(tableNode);
+                foreach (Column col in tbl.Columns)
+                {
+                    TreeNode columnNode = new TreeNode
                     {
-                        Text = tbl.DisplayName,
-                        Tag = tbl.Name
+                        Text = col.DisplayName,
+                        Tag = col.Name
                     };
-
-                    tablesNode.Nodes.Add(tableNode);
-
-                    foreach (Column col in tbl.Columns)
-                    {
-                        TreeNode columnNode = new TreeNode
-                        {
-                            Text = col.DisplayName,
-                            Tag = col.Name
-                        };
-                    }
+                    tableNode.Nodes.Add(columnNode);
                 }
             }
         }

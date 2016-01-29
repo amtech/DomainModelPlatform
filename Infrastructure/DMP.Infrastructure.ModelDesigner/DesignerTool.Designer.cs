@@ -31,7 +31,6 @@ namespace DMP.Infrastructure.ModelDesigner
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("表");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DesignerTool));
             this.splitModule = new System.Windows.Forms.SplitContainer();
             this.treeModule = new DMP.Infrastructure.ModelDesigner.Common.TreeViewEx();
@@ -103,11 +102,6 @@ namespace DMP.Infrastructure.ModelDesigner
             this.treeModel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeModel.Location = new System.Drawing.Point(0, 0);
             this.treeModel.Name = "treeModel";
-            treeNode1.Name = "treeNodeTables";
-            treeNode1.Tag = "tables";
-            treeNode1.Text = "表";
-            this.treeModel.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
             this.treeModel.Size = new System.Drawing.Size(302, 442);
             this.treeModel.TabIndex = 1;
             this.treeModel.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeNodeAfterSelect);
