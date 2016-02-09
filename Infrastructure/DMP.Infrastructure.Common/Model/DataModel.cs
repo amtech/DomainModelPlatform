@@ -12,5 +12,15 @@ namespace DMP.Infrastructure.Common.Model
         [BrowsableAttribute(false), DefaultValueAttribute(false)]
         public List<Table> Tables { get; set; }
 
+        public Table FindTable(string tableName)
+        {
+            foreach (Table tbl in Tables)
+            {
+                if (tbl.Name == tableName)
+                { return tbl; }
+            }
+            return null;
+        }
+
     }
 }

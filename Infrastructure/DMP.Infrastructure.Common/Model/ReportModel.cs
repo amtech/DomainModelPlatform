@@ -14,7 +14,7 @@ namespace DMP.Infrastructure.Common.Model
         public ReportModel()
         {
             Tables = new List<Table>();
-        }
+        } 
 
     }
 }

@@ -1,0 +1,4 @@
+<Project Name="csm" Folder="E:\code\DomainModelPlatform\Ui\DMP.Ui.Web\Resources\Models\csm\" DisplayName="客户服务管理">
+  <Business />
+  <Reports />
+</Project>

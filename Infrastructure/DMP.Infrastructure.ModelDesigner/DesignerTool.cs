@@ -179,6 +179,7 @@ namespace DMP.Infrastructure.ModelDesigner
                 {
                     case StaticValue.Add:
                         {
+                            if (nodeRightMenu.Tag == null) return;
                             if (StaticValue.PrjReportsNodeName.Equals(nodeRightMenu.Tag.ToString()))
                             {
                                 CreateNewReportModel();
@@ -189,10 +190,14 @@ namespace DMP.Infrastructure.ModelDesigner
                             }
                             else if (StaticValue.ModelColumnsNodeName.Equals(nodeRightMenu.Tag.ToString()))
                             {
+                                CreateNewColumn();
                             }
                         }
                         break;
                     case StaticValue.Delete:
+                        {
+
+                        }
                         break;
                 }
             }
@@ -272,63 +277,79 @@ namespace DMP.Infrastructure.ModelDesigner
             }
         }
 
+        /// <summary>将报表模型转成树状控件</summary>
+        private void ReportModelToTreeView()
+        {
+            treeModel.Nodes.Clear();
+
+            if (CurrentModel != null)
+            {
+                //创建表-根节点
+                TreeNode tablesNode =
+                    new TreeNode { Text = StaticValue.ModelTablesNodeDisplayName, Tag = StaticValue.ModelTablesNodeName };
+                treeModel.Nodes.Add(tablesNode);
+                //整个模型对象结构
+                foreach (Table tbl in (CurrentModel as ReportModel).Tables)
+                {
+                    TreeNodeModelElement tableNode = Utils.NewTableTreeNode(tbl.Name, tbl.DisplayName);
+                    tablesNode.Nodes.Add(tableNode);
+                    //创建字段-根节点
+                    TreeNode columnsNode = new TreeNode { Text = StaticValue.ModelColumnsNodeDisplayName, Tag = StaticValue.ModelColumnsNodeName };
+                    tableNode.Nodes.Add(columnsNode);
+                    foreach (Column col in tbl.Columns)
+                    {
+                        TreeNodeModelElement columnNode = Utils.NewColumnTreeNode(col.Name, col.DisplayName);
+                        columnsNode.Nodes.Add(columnNode);
+                    }
+                }
+            }
+        }
+
         /// <summary>新建数据表</summary>
         private void CreateNewTable()
         {
-            //todo:创建表对象
-            Table tblNew = new Table { Name = "NewTable", DisplayName = "新建表" };
-            //todo:树形控件增加一个表节点
-            TreeNode tnNewTable = new TreeNode { Text = tblNew.DisplayName, Tag = tblNew.Name };
-            treeModel.SelectedNode.Nodes.Add(tnNewTable);
-            //todo:表节点底下加一个字段根节点
-            tnNewTable.Nodes.Add(new TreeNode { Text = StaticValue.ModelColumnsNodeDisplayName, Tag = StaticValue.ModelColumnsNodeName }); 
-            //todo:当前模型对象添加table对象 
             if (CurrentModel is ReportModel)
             {
-                (CurrentModel as ReportModel).Tables.Add(tblNew);
+                //todo:创建表对象
+                Table tblNew = ModelUtils.AddNewTable(CurrentModel as ReportModel);
+                //todo:树形控件增加一个表节点
+                TreeNodeModelElement tnNewTable = Utils.NewTableTreeNode(tblNew.Name, tblNew.DisplayName);
+                treeModel.SelectedNode.Nodes.Add(tnNewTable);
+                //选中新增的表节点
+                treeModel.SelectedNode = treeModel.SelectedNode.Nodes[treeModel.SelectedNode.Nodes.Count - 1];
+
+                //todo:表节点底下加一个字段根节点
+                tnNewTable.Nodes.Add(new TreeNode { Text = StaticValue.ModelColumnsNodeDisplayName, Tag = StaticValue.ModelColumnsNodeName });
                 //todo:属性窗口对象绑定当前新增的table对象。
                 pgridModelSetting.SelectedObject = (CurrentModel as ReportModel).Tables[(CurrentModel as ReportModel).Tables.Count - 1];
             }
 
         }
 
-        /// <summary>新建数据表</summary>
+
+        /// <summary>新建字段</summary>
         private void CreateNewColumn()
         {
-             //todo:
-        }
-
-        /// <summary>将报表模型转成树状控件</summary>
-        private void ReportModelToTreeView()
-        {
-            TreeNode tablesNode = treeModel.GetTreeNodeByTag("Tables");
-
-            if (CurrentModel != null)
+            if (CurrentModel is ReportModel)
             {
-                tablesNode =
-                    new TreeNode { Text = StaticValue.ModelTablesNodeDisplayName, Tag = StaticValue.ModelTablesNodeName };
-                treeModel.Nodes.Add(tablesNode);
-            }
-
-            foreach (Table tbl in (CurrentModel as ReportModel).Tables)
-            {
-                TreeNode tableNode = new TreeNode
+                if(treeModel.SelectedNode.Parent is TreeNodeModelElement)
                 {
-                    Text = tbl.DisplayName,
-                    Tag = tbl.Name
-                };
-                tablesNode.Nodes.Add(tableNode);
-                foreach (Column col in tbl.Columns)
-                {
-                    TreeNode columnNode = new TreeNode
-                    {
-                        Text = col.DisplayName,
-                        Tag = col.Name
-                    };
-                    tableNode.Nodes.Add(columnNode);
+                    //todo:根据当前选中TreeNode找到表对象，添加字段对象。
+                    string tableName = (treeModel.SelectedNode.Parent as TreeNodeModelElement).ElementName;
+                    Table tbl = (CurrentModel as ReportModel).FindTable(tableName);
+                    //todo:创建字段对象
+                    Column col = ModelUtils.AddNewColumn(tbl);
+                    //todo:树形控件增加一个表节点
+                    TreeNodeModelElement tnCol = Utils.NewColumnTreeNode(col.Name, col.DisplayName);
+                    treeModel.SelectedNode.Nodes.Add(tnCol);
+                    //todo:属性窗格绑定字段对象。
+                    pgridModelSetting.SelectedObject = tbl.Columns[tbl.Columns.Count - 1];
                 }
+                
             }
         }
+
+
 
     }
 }

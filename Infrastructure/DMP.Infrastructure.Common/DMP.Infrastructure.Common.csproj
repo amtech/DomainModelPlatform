@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ElementCollection.cs" />
+    <Compile Include="ModelUtils.cs" />
     <Compile Include="Model\BusinessModel.cs" />
     <Compile Include="Model\Elements\Column.cs" />
     <Compile Include="Model\ModelBase.cs" />

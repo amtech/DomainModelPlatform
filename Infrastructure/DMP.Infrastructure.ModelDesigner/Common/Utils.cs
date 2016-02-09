@@ -10,6 +10,8 @@ namespace DMP.Infrastructure.ModelDesigner.Common
 {
     public class Utils
     {
+        #region 项目相关
+
         //项目文件后缀
         public const string ProjectFilePostfix = ".mprj";
 
@@ -73,6 +75,30 @@ namespace DMP.Infrastructure.ModelDesigner.Common
             }
             return string.Empty;
         }
+
+        #endregion
+
+        #region TreeNode相关
+
+        /// <summary>新建表treenode</summary>
+        /// <param name="name"></param>
+        /// <param name="displayName"></param>
+        /// <returns></returns>
+        public static TreeNodeModelElement NewTableTreeNode(string name, string displayName)
+        {
+            return new TreeNodeModelElement { ElementType = StaticValue.Table, ElementName = name, Text = displayName };
+        }
+
+        /// <summary>新建字段treenode</summary>
+        /// <param name="name"></param>
+        /// <param name="displayName"></param>
+        /// <returns></returns>
+        public static TreeNodeModelElement NewColumnTreeNode(string name, string displayName)
+        {
+            return new TreeNodeModelElement { ElementType = StaticValue.Column, ElementName = name, Text = displayName };
+        }
+
+        #endregion
 
     }
 }

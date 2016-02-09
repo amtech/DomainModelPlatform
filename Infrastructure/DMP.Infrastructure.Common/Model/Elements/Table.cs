@@ -36,6 +36,15 @@ namespace DMP.Infrastructure.Common.Model
             Columns = new List<Column>();
         }
 
+        public Column FindColumn(string colName)
+        {
+            foreach (Column col in Columns)
+            {
+                if (col.Name == colName)
+                { return col; }
+            }
+            return null;
+        }
 
     }
 }

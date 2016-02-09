@@ -143,12 +143,12 @@ namespace DMP.Infrastructure.ModelDesigner
             this.rmenuAdd,
             this.rmenuDelete});
             this.nodeRightMenu.Name = "nodeRightMenu";
-            this.nodeRightMenu.Size = new System.Drawing.Size(95, 48);
+            this.nodeRightMenu.Size = new System.Drawing.Size(153, 70);
             // 
             // rmenuAdd
             // 
             this.rmenuAdd.Name = "rmenuAdd";
-            this.rmenuAdd.Size = new System.Drawing.Size(94, 22);
+            this.rmenuAdd.Size = new System.Drawing.Size(152, 22);
             this.rmenuAdd.Tag = "add";
             this.rmenuAdd.Text = "新增";
             this.rmenuAdd.Click += new System.EventHandler(this.RightMenuClick);
@@ -156,9 +156,10 @@ namespace DMP.Infrastructure.ModelDesigner
             // rmenuDelete
             // 
             this.rmenuDelete.Name = "rmenuDelete";
-            this.rmenuDelete.Size = new System.Drawing.Size(94, 22);
+            this.rmenuDelete.Size = new System.Drawing.Size(152, 22);
             this.rmenuDelete.Tag = "delete";
             this.rmenuDelete.Text = "删除";
+            this.rmenuDelete.Click += new System.EventHandler(this.RightMenuClick);
             // 
             // DesignerTool
             // 
