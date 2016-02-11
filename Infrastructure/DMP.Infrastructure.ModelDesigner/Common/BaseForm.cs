@@ -36,7 +36,7 @@ namespace DMP.Infrastructure.ModelDesigner.Common
 
         protected bool Confirm(string msg)
         {
-            DialogResult dr = MessageBox.Show("确定要退出吗?", "退出系统", MessageBoxButtons.OKCancel);
+            DialogResult dr = MessageBox.Show(msg, "请确认", MessageBoxButtons.OKCancel);
             return dr == DialogResult.OK;
         }
 

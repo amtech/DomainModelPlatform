@@ -20,7 +20,6 @@ namespace DMP.Infrastructure.Common.Model
                 { return tbl; }
             }
             return null;
-        }
-
+        } 
     }
 }

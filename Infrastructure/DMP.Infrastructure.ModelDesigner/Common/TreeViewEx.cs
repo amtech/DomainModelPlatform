@@ -17,6 +17,13 @@ namespace DMP.Infrastructure.ModelDesigner.Common
             return null;
         }
 
+        /// <summary> 选中新增的 节点 </summary>
+        public void SelectLastAddNode()
+        {
+             
+            SelectedNode = SelectedNode.Nodes[SelectedNode.Nodes.Count - 1];
+        }
+
     }
 
     /// <summary></summary>

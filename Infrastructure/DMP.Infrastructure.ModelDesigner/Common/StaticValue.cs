@@ -13,6 +13,8 @@ namespace DMP.Infrastructure.ModelDesigner.Common
         public const string PrjBusinessNodeDisplayName = "业务单据";
         /// <summary>项目文件-报表节点名称</summary>
         public const string PrjReportsNodeName = "Reports";
+        /// <summary>项目文件-报表元素名称</summary>
+        public const string PrjReportElementName = "Report";
         /// <summary>项目文件-报表节点显示名称</summary>
         public const string PrjReportsNodeDisplayName = "报表";
         /// <summary>模型-数据表节点名称</summary>

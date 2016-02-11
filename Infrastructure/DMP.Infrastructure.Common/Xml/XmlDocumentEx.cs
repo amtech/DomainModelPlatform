@@ -8,6 +8,9 @@ namespace DMP.Infrastructure.Common.Xml
 {
     public class XmlDocumentEx : XmlDocument
     {
+
+        private bool isLoading = false; 
+
         public bool IsEditing { get; set; }
 
         public XmlDocumentEx()
@@ -15,12 +18,28 @@ namespace DMP.Infrastructure.Common.Xml
         {
             NodeChanged += new XmlNodeChangedEventHandler(XmlDocumentNodeEditing);
             NodeInserted += new XmlNodeChangedEventHandler(XmlDocumentNodeEditing);
-            NodeRemoved += new XmlNodeChangedEventHandler(XmlDocumentNodeEditing); 
+            NodeRemoved += new XmlNodeChangedEventHandler(XmlDocumentNodeEditing);
+        }
+
+        public override void Load(string filename)
+        {
+            isLoading = true;
+            base.Load(filename);
+            isLoading = false;
+        }
+
+        public override void Save(string filename)
+        {
+            base.Save(filename);
+            IsEditing = false;
         }
 
         void XmlDocumentNodeEditing(object sender, XmlNodeChangedEventArgs e)
         {
-            IsEditing = true;
+            if(!isLoading)
+            { 
+                IsEditing = true;
+            }
         }
 
     }

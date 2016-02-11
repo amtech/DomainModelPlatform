@@ -72,21 +72,53 @@ namespace DMP.Infrastructure.ModelDesigner
                                 Tag = xmlNode.Name
                             };
                             treeModule.Nodes.Add(treeNode);
+                            InitTreeModuleChildNodes(xmlNode, treeNode);
                         }
                     }
                 }
             }
         }
 
+        private void InitTreeModuleChildNodes(XmlNode rootXmlNode, TreeNode rootTreeNode)
+        {
+            foreach(XmlNode xmlNode in rootXmlNode.ChildNodes)
+            {
+                TreeNode treeNode = new TreeNode
+                {
+                    Text = xmlNode.Attributes["DisplayName"].Value,
+                    Tag = xmlNode.Attributes["Name"].Value
+                };
+                rootTreeNode.Nodes.Add(treeNode);
+            }
+        } 
+
         /// <summary>TreeNode AfterSelect事件</summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void TreeNodeAfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (e.Node != null)
+            if (e.Node == null) return;
+            if (e.Node is TreeNodeModelElement)
             {
+                TreeNodeModelElement elementNode = (e.Node as TreeNodeModelElement);
+                switch (elementNode.ElementType)
+                {
+                    case StaticValue.Table:
+                        {
+                            pgridModelSetting.SelectedObject =
+                                  (CurrentModel as DataModel).FindTable(elementNode.ElementName);
+                        }
+                        break;
+                    case StaticValue.Column:
+                        {
+                            pgridModelSetting.SelectedObject = (CurrentModel as DataModel).
+                                FindTable((e.Node.Parent.Parent as TreeNodeModelElement).ElementName).FindColumn(elementNode.ElementName);
+                        }
+                        break;
+                }
 
             }
+
         }
 
         /// <summary>PropertyGrid PropertyValueChanged 事件</summary>
@@ -253,7 +285,8 @@ namespace DMP.Infrastructure.ModelDesigner
             if (newModelDialog.ShowDialog() == DialogResult.OK)
             {
                 //todo:往项目文件里面加一个节点。 
-                XmlElement xmlElement = _projectContent.CreateElement(newModelDialog.Model.Name);
+                XmlElement xmlElement = _projectContent.CreateElement(StaticValue.PrjReportElementName);
+                xmlElement.SetAttribute("Name", newModelDialog.Model.Name);
                 xmlElement.SetAttribute("DisplayName", newModelDialog.Model.DisplayName);
                 if (_projectContent.DocumentElement != null)
                 {
@@ -315,41 +348,35 @@ namespace DMP.Infrastructure.ModelDesigner
                 //todo:树形控件增加一个表节点
                 TreeNodeModelElement tnNewTable = Utils.NewTableTreeNode(tblNew.Name, tblNew.DisplayName);
                 treeModel.SelectedNode.Nodes.Add(tnNewTable);
-                //选中新增的表节点
-                treeModel.SelectedNode = treeModel.SelectedNode.Nodes[treeModel.SelectedNode.Nodes.Count - 1];
-
+                //选中新增的节点
+                treeModel.SelectLastAddNode();
                 //todo:表节点底下加一个字段根节点
                 tnNewTable.Nodes.Add(new TreeNode { Text = StaticValue.ModelColumnsNodeDisplayName, Tag = StaticValue.ModelColumnsNodeName });
-                //todo:属性窗口对象绑定当前新增的table对象。
-                pgridModelSetting.SelectedObject = (CurrentModel as ReportModel).Tables[(CurrentModel as ReportModel).Tables.Count - 1];
             }
 
         }
-
 
         /// <summary>新建字段</summary>
         private void CreateNewColumn()
         {
             if (CurrentModel is ReportModel)
             {
-                if(treeModel.SelectedNode.Parent is TreeNodeModelElement)
+                if (treeModel.SelectedNode.Parent is TreeNodeModelElement)
                 {
                     //todo:根据当前选中TreeNode找到表对象，添加字段对象。
                     string tableName = (treeModel.SelectedNode.Parent as TreeNodeModelElement).ElementName;
                     Table tbl = (CurrentModel as ReportModel).FindTable(tableName);
                     //todo:创建字段对象
                     Column col = ModelUtils.AddNewColumn(tbl);
-                    //todo:树形控件增加一个表节点
+                    //todo:树形控件增加一个字段节点
                     TreeNodeModelElement tnCol = Utils.NewColumnTreeNode(col.Name, col.DisplayName);
                     treeModel.SelectedNode.Nodes.Add(tnCol);
-                    //todo:属性窗格绑定字段对象。
-                    pgridModelSetting.SelectedObject = tbl.Columns[tbl.Columns.Count - 1];
+                    //选中新增的节点
+                    treeModel.SelectLastAddNode();
                 }
-                
+
             }
         }
-
-
 
     }
 }
