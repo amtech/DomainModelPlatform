@@ -16,19 +16,19 @@ namespace DMP.Infrastructure.Common.Model
         /// <param name="type">类型</param>
         /// <param name="xml">XML字符串</param>
         /// <returns></returns>
-        public static object Deserialize(Type type, string xml)
+        public static T Deserialize<T>(string xml)
         {
             try
             {
                 using (StringReader sr = new StringReader(xml))
                 {
-                    XmlSerializer xmldes = new XmlSerializer(type);
-                    return xmldes.Deserialize(sr);
+                    XmlSerializer xmldes = new XmlSerializer(typeof(T));
+                    return (T)xmldes.Deserialize(sr);
                 }
             }
             catch (Exception e)
-            { 
-                return null;
+            {
+                return default(T);
             }
         }
 
@@ -38,10 +38,10 @@ namespace DMP.Infrastructure.Common.Model
         /// <param name="type"></param>
         /// <param name="xml"></param>
         /// <returns></returns>
-        public static object Deserialize(Type type, Stream stream)
+        public static T Deserialize<T>(Stream stream)
         {
-            XmlSerializer xmldes = new XmlSerializer(type);
-            return xmldes.Deserialize(stream);
+            XmlSerializer xmldes = new XmlSerializer(typeof(T));
+            return (T)xmldes.Deserialize(stream);
         }
         #endregion
 

@@ -12,6 +12,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using DMP.Infrastructure.Common.Xml;
+using System.IO;
 
 namespace DMP.Infrastructure.ModelDesigner
 {
@@ -81,7 +82,7 @@ namespace DMP.Infrastructure.ModelDesigner
 
         private void InitTreeModuleChildNodes(XmlNode rootXmlNode, TreeNode rootTreeNode)
         {
-            foreach(XmlNode xmlNode in rootXmlNode.ChildNodes)
+            foreach (XmlNode xmlNode in rootXmlNode.ChildNodes)
             {
                 TreeNode treeNode = new TreeNode
                 {
@@ -90,7 +91,7 @@ namespace DMP.Infrastructure.ModelDesigner
                 };
                 rootTreeNode.Nodes.Add(treeNode);
             }
-        } 
+        }
 
         /// <summary>TreeNode AfterSelect事件</summary>
         /// <param name="sender"></param>
@@ -98,25 +99,16 @@ namespace DMP.Infrastructure.ModelDesigner
         private void TreeNodeAfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node == null) return;
-            if (e.Node is TreeNodeModelElement)
+            if (e.Node is TreeNodeModelElement) //选中模型的元素
             {
-                TreeNodeModelElement elementNode = (e.Node as TreeNodeModelElement);
-                switch (elementNode.ElementType)
+                OnModelElementSelected((e.Node as TreeNodeModelElement));
+            }
+            else
+            {
+                if (e.Node.TreeView == treeModule && e.Node.Parent != null) //选中模型
                 {
-                    case StaticValue.Table:
-                        {
-                            pgridModelSetting.SelectedObject =
-                                  (CurrentModel as DataModel).FindTable(elementNode.ElementName);
-                        }
-                        break;
-                    case StaticValue.Column:
-                        {
-                            pgridModelSetting.SelectedObject = (CurrentModel as DataModel).
-                                FindTable((e.Node.Parent.Parent as TreeNodeModelElement).ElementName).FindColumn(elementNode.ElementName);
-                        }
-                        break;
+                    OnModelSelected(e.Node);
                 }
-
             }
 
         }
@@ -240,40 +232,34 @@ namespace DMP.Infrastructure.ModelDesigner
         /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
+            string projectFolder = _projectContent.DocumentElement.Attributes["Folder"].Value;
             if (_projectContent.IsEditing)
             {
                 if (Confirm("是否保存项目？"))
                 {
+                    //todo: 保存项目文件
                     _projectContent.Save(ProjectFilePath);
+                    //todo: 构建项目目录结构(防止文件夹丢失)
+                    Utils.CreatePrjFolder(projectFolder);
                 }
             }
-            /*
+
             if (treeModule.SelectedNode != null)
             {
-                if (treeModule.SelectedNode.Tag is ReportModel)
+                if (CurrentModel is ReportModel)
                 {
-                    var reportModel = treeModule.SelectedNode.Tag as ReportModel;
-                    foreach (TreeNode modelElement in treeModel.Nodes)
-                    {
-                        if ("tables".Equals(modelElement.Tag))
-                        {
-                            reportModel.Tables.Clear();
-                            foreach (TreeNode table in modelElement.Nodes)
-                            {
-                                reportModel.Tables.Add(table.Tag as Table);
-                            }
-                        }
-                    }
+                    string filePath = projectFolder + "Reports\\" + CurrentModel.Name + ".xml";
 
-                    string xml = XmlUtils.Serializer(reportModel);
-                    string savePath = GetSaveXmlPath();
-                    if (!string.IsNullOrEmpty(savePath))
+                    //todo：将当期模型序列化成xml字符串
+                    string xml = XmlUtils.Serializer(CurrentModel);
+                    //CurrentModel.Name
+                    //todo：判断模型文件是否存在 
+                    if (!File.Exists(filePath))
                     {
-                        SaveFile(xml, savePath);
+                        SaveFile(xml, filePath);
                     }
                 }
             }
-            */
         }
 
         /// <summary>新建报表模型</summary>
@@ -290,7 +276,8 @@ namespace DMP.Infrastructure.ModelDesigner
                 xmlElement.SetAttribute("DisplayName", newModelDialog.Model.DisplayName);
                 if (_projectContent.DocumentElement != null)
                 {
-                    xmlElement.SetAttribute("Path", _projectContent.DocumentElement.GetAttribute("Folder") + newModelDialog.Model.Name + ".xml");
+                    string filePath = _projectContent.DocumentElement.GetAttribute("Folder") + "Reports\\" + newModelDialog.Model.Name + ".xml";
+                    xmlElement.SetAttribute("Path", filePath);
                 }
                 XmlNode reportsXmlNode = _projectContent.SelectSingleNode("/Project/Reports");
                 if (reportsXmlNode != null)
@@ -376,6 +363,45 @@ namespace DMP.Infrastructure.ModelDesigner
                 }
 
             }
+        }
+
+        /// <summary>选中模型元素时</summary>
+        /// <param name="elementNode"></param>
+        private void OnModelElementSelected(TreeNodeModelElement elementNode)
+        {
+            switch (elementNode.ElementType)
+            {
+                case StaticValue.Table:
+                    {
+                        pgridModelSetting.SelectedObject =
+                              (CurrentModel as DataModel).FindTable(elementNode.ElementName);
+                    }
+                    break;
+                case StaticValue.Column:
+                    {
+                        pgridModelSetting.SelectedObject = (CurrentModel as DataModel).
+                            FindTable((elementNode.Parent.Parent as TreeNodeModelElement).ElementName).FindColumn(elementNode.ElementName);
+                    }
+                    break;
+            }
+        }
+
+        /// <summary>选中模型</summary>
+        /// <param name="node"></param>
+        private void OnModelSelected(TreeNode node)
+        {
+            if ("Reports".Equals(StringUtils.ToString(node.Parent.Tag), StringComparison.OrdinalIgnoreCase))
+            {
+                string projectFolder = _projectContent.DocumentElement.Attributes["Folder"].Value;
+                string filePath = projectFolder + "Reports\\" + StringUtils.ToString(node.Tag) + ".xml";
+                if (File.Exists(filePath))
+                {
+                    FileStream file = new FileStream(filePath, FileMode.Open);
+                    CurrentModel = XmlUtils.Deserialize<ReportModel>(file);
+                    file.Close();
+                } 
+            }
+            ReportModelToTreeView();
         }
 
     }

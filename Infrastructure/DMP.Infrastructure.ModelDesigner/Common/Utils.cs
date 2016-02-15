@@ -42,13 +42,20 @@ namespace DMP.Infrastructure.ModelDesigner.Common
                 rootProject.AppendChild(reports);
 
                 //Business 
-                doc.Save(fullName);
-
-                if (Directory.Exists(projectFolder) == false)//如果不存在就创建file文件夹{
-                    Directory.CreateDirectory(projectFolder);
+                doc.Save(fullName); 
+                CreatePrjFolder(projectFolder);
                 return fullName;
             }
             return string.Empty;
+        }
+
+        public static void CreatePrjFolder(string projectFolder)
+        {
+            if (Directory.Exists(projectFolder) == false)//如果不存在就创建file文件夹{
+                Directory.CreateDirectory(projectFolder);
+            if (Directory.Exists(projectFolder + "Reports") == false)//如果不存在就创建file文件夹{
+                Directory.CreateDirectory(projectFolder + "Reports");
+
         }
 
         /// <summary>打开项目</summary>
@@ -56,7 +63,7 @@ namespace DMP.Infrastructure.ModelDesigner.Common
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                Filter = string.Format("项目文件(*{0})|*{0}", ProjectFilePostfix)
+                Filter = string.Format("项目文件(*{0})|*{0}", ProjectFilePostfix) 
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
