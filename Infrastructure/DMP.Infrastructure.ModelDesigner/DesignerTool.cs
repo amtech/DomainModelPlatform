@@ -22,8 +22,8 @@ namespace DMP.Infrastructure.ModelDesigner
         #region Members 
 
         /// <summary>当前项目mprj文件xml结构</summary>
-        private readonly XmlDocumentEx _projectContent = new XmlDocumentEx();
-
+        private readonly XmlDocumentEx ProjectContent = new XmlDocumentEx();
+        private bool ModelEdited = false;
         #endregion
 
         #region Properties
@@ -50,7 +50,7 @@ namespace DMP.Infrastructure.ModelDesigner
         {
             if (!string.IsNullOrEmpty(ProjectFilePath))
             {
-                _projectContent.Load(ProjectFilePath); //加载xml文件
+                ProjectContent.Load(ProjectFilePath); //加载xml文件
             }
             InitTreeModule();
         }
@@ -58,12 +58,12 @@ namespace DMP.Infrastructure.ModelDesigner
         /// <summary>初始化模块信息的树形控件</summary>
         private void InitTreeModule()
         {
-            if (_projectContent != null)
+            if (ProjectContent != null)
             {
                 treeModule.Nodes.Clear();
-                if (_projectContent.DocumentElement != null)
+                if (ProjectContent.DocumentElement != null)
                 {
-                    foreach (XmlNode xmlNode in _projectContent.DocumentElement.ChildNodes)
+                    foreach (XmlNode xmlNode in ProjectContent.DocumentElement.ChildNodes)
                     {
                         if (StaticValue.PrjNodesNameMapping.Keys.Contains(xmlNode.Name))
                         {
@@ -121,6 +121,7 @@ namespace DMP.Infrastructure.ModelDesigner
             PropertyGrid propertyGrid = (s as PropertyGrid);
             if (propertyGrid != null && propertyGrid.SelectedObject != null)
             {
+                ModelEdited = true;
                 if (propertyGrid.SelectedObject is Table)
                 {
                     treeModel.SelectedNode.Text = ((Table)propertyGrid.SelectedObject).DisplayName;
@@ -147,20 +148,20 @@ namespace DMP.Infrastructure.ModelDesigner
             {
                 var tn = e.Node;
                 //一层节点，展开，收缩等操作都不响应。
-                if (tn.Parent == null
-                    || e.Action == TreeViewAction.Collapse
+                if (e.Action == TreeViewAction.Collapse
                     || e.Action == TreeViewAction.Expand)
                 {
                     return;
                 }
                 //如果当前没有编辑的模型就没有提示
-                if (CurrentModel == null) return;
+                if (CurrentModel == null || !ModelEdited) return;
                 switch (MessageBox.Show("单据已经修改，要保存吗？", "询问", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
                 {
                     case DialogResult.Cancel:
                         break;
                     case DialogResult.Yes:
                         {
+                            SaveModel();
                         }
                         break;
                     case DialogResult.No:
@@ -169,6 +170,9 @@ namespace DMP.Infrastructure.ModelDesigner
                         }
                         break;
                 }
+                //重置编辑状态
+                ModelEdited = false;
+                CurrentModel = null;
             }
 
         }
@@ -199,11 +203,11 @@ namespace DMP.Infrastructure.ModelDesigner
             var toolStripDropDownItem = sender as ToolStripDropDownItem;
             if (toolStripDropDownItem != null)
             {
+                if (nodeRightMenu.Tag == null) return;
                 switch (toolStripDropDownItem.Tag.ToString())
                 {
                     case StaticValue.Add:
-                        {
-                            if (nodeRightMenu.Tag == null) return;
+                        { 
                             if (StaticValue.PrjReportsNodeName.Equals(nodeRightMenu.Tag.ToString()))
                             {
                                 CreateNewReportModel();
@@ -211,16 +215,31 @@ namespace DMP.Infrastructure.ModelDesigner
                             else if (StaticValue.ModelTablesNodeName.Equals(nodeRightMenu.Tag.ToString()))
                             {
                                 CreateNewTable();
+                                ModelEdited = true;
                             }
                             else if (StaticValue.ModelColumnsNodeName.Equals(nodeRightMenu.Tag.ToString()))
                             {
                                 CreateNewColumn();
+                                ModelEdited = true;
                             }
                         }
                         break;
                     case StaticValue.Delete:
                         {
-
+                            if (StaticValue.PrjReportsNodeName.Equals(nodeRightMenu.Tag.ToString()))
+                            {
+                                
+                            }
+                            else if (StaticValue.ModelTablesNodeName.Equals(nodeRightMenu.Tag.ToString()))
+                            {
+                                
+                                ModelEdited = true;
+                            }
+                            else if (StaticValue.ModelColumnsNodeName.Equals(nodeRightMenu.Tag.ToString()))
+                            {
+                                
+                                ModelEdited = true;
+                            }
                         }
                         break;
                 }
@@ -232,34 +251,8 @@ namespace DMP.Infrastructure.ModelDesigner
         /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
-            string projectFolder = _projectContent.DocumentElement.Attributes["Folder"].Value;
-            if (_projectContent.IsEditing)
-            {
-                if (Confirm("是否保存项目？"))
-                {
-                    //todo: 保存项目文件
-                    _projectContent.Save(ProjectFilePath);
-                    //todo: 构建项目目录结构(防止文件夹丢失)
-                    Utils.CreatePrjFolder(projectFolder);
-                }
-            }
-
-            if (treeModule.SelectedNode != null)
-            {
-                if (CurrentModel is ReportModel)
-                {
-                    string filePath = projectFolder + "Reports\\" + CurrentModel.Name + ".xml";
-
-                    //todo：将当期模型序列化成xml字符串
-                    string xml = XmlUtils.Serializer(CurrentModel);
-                    //CurrentModel.Name
-                    //todo：判断模型文件是否存在 
-                    if (!File.Exists(filePath))
-                    {
-                        SaveFile(xml, filePath);
-                    }
-                }
-            }
+            SaveProject();
+            SaveModel();
         }
 
         /// <summary>新建报表模型</summary>
@@ -271,15 +264,15 @@ namespace DMP.Infrastructure.ModelDesigner
             if (newModelDialog.ShowDialog() == DialogResult.OK)
             {
                 //todo:往项目文件里面加一个节点。 
-                XmlElement xmlElement = _projectContent.CreateElement(StaticValue.PrjReportElementName);
+                XmlElement xmlElement = ProjectContent.CreateElement(StaticValue.PrjReportElementName);
                 xmlElement.SetAttribute("Name", newModelDialog.Model.Name);
                 xmlElement.SetAttribute("DisplayName", newModelDialog.Model.DisplayName);
-                if (_projectContent.DocumentElement != null)
+                if (ProjectContent.DocumentElement != null)
                 {
-                    string filePath = _projectContent.DocumentElement.GetAttribute("Folder") + "Reports\\" + newModelDialog.Model.Name + ".xml";
+                    string filePath = ProjectContent.DocumentElement.GetAttribute("Folder") + "Reports\\" + newModelDialog.Model.Name + ".xml";
                     xmlElement.SetAttribute("Path", filePath);
                 }
-                XmlNode reportsXmlNode = _projectContent.SelectSingleNode("/Project/Reports");
+                XmlNode reportsXmlNode = ProjectContent.SelectSingleNode("/Project/Reports");
                 if (reportsXmlNode != null)
                 {
                     reportsXmlNode.AppendChild(xmlElement);
@@ -392,17 +385,58 @@ namespace DMP.Infrastructure.ModelDesigner
         {
             if ("Reports".Equals(StringUtils.ToString(node.Parent.Tag), StringComparison.OrdinalIgnoreCase))
             {
-                string projectFolder = _projectContent.DocumentElement.Attributes["Folder"].Value;
+                string projectFolder = ProjectContent.DocumentElement.Attributes["Folder"].Value;
                 string filePath = projectFolder + "Reports\\" + StringUtils.ToString(node.Tag) + ".xml";
                 if (File.Exists(filePath))
                 {
                     FileStream file = new FileStream(filePath, FileMode.Open);
                     CurrentModel = XmlUtils.Deserialize<ReportModel>(file);
                     file.Close();
-                } 
+                }
             }
             ReportModelToTreeView();
         }
+
+        /// <summary>保存项目</summary>
+        private void SaveProject()
+        {
+            string projectFolder = ProjectContent.DocumentElement.Attributes["Folder"].Value;
+            if (ProjectContent.IsEditing)
+            {
+                if (Confirm("是否保存项目？"))
+                {
+                    //todo: 保存项目文件
+                    ProjectContent.Save(ProjectFilePath);
+                }
+            }
+        }
+
+        /// <summary>保存模型</summary>
+        private void SaveModel()
+        {
+            string projectFolder = ProjectContent.DocumentElement.Attributes["Folder"].Value;
+            //todo: 构建项目目录结构(防止文件夹丢失)
+            Utils.CreatePrjFolder(projectFolder);
+            if (treeModule.SelectedNode != null)
+            {
+                if (CurrentModel is ReportModel)
+                {
+                    string filePath = projectFolder + "Reports\\" + CurrentModel.Name + ".xml";
+
+                    //todo：将当期模型序列化成xml字符串
+                    string xml = XmlUtils.Serializer(CurrentModel);
+                    //CurrentModel.Name
+                    //todo：判断模型文件是否存在 
+                    if (!File.Exists(filePath))
+                    {
+                        SaveFile(xml, filePath);
+                    }
+                }
+                //重置编辑状态
+                ModelEdited = false;
+            }
+        }
+
 
     }
 }
