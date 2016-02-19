@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace DMP.Infrastructure.Common.Model
 {
@@ -25,24 +26,31 @@ namespace DMP.Infrastructure.Common.Model
     { 
 
         [DescriptionAttribute("名称标识"), CategoryAttribute("基本属性")]
+        [XmlAttribute("Name")]
         public string Name { get; set; }
 
         [DescriptionAttribute("字段名"), CategoryAttribute("基本属性")]
+        [XmlAttribute("FieldName")]
         public string FieldName { get; set; }
 
         [DescriptionAttribute("字段类型"), CategoryAttribute("基本属性")]
+        [XmlAttribute("ColumnType")]
         public ColumnTypes ColumnType { get; set; }
 
         [DescriptionAttribute("显示名称"), CategoryAttribute("基本属性")]
+        [XmlAttribute("DisplayName")]
         public string DisplayName { get; set; }
 
         [DescriptionAttribute("是否主键"), CategoryAttribute("基本属性")]
+        [XmlAttribute("IsKey")]
         public bool IsKey { get; set; }
 
         [DescriptionAttribute("是否虚字段"), CategoryAttribute("基本属性")]
+        [XmlAttribute("IsVirtual")]
         public bool IsVirtual { get; set; }
 
         [DescriptionAttribute("是否用于查询"), CategoryAttribute("基本属性")]
+        [XmlAttribute("IsSearch")]
         public bool IsSearch { get; set; }
     }
 }

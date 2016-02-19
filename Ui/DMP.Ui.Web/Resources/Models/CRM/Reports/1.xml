@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ReportModel SourceTag="1" DocumentType="1" Name="1" DisplayName="1">
+  <Tables>
+    <Table Name="NewTable1" DisplayName="NewTable1" IsMain="false" IsVirtual="false">
+      <Columns>
+        <Column Name="NewColumn1" ColumnType="String" DisplayName="NewColumn1" IsKey="false" IsVirtual="false" IsSearch="false" />
+      </Columns>
+    </Table>
+  </Tables>
+</ReportModel>

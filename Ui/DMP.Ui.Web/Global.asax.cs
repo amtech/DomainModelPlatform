@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.Web.SessionState;
+﻿using DMP.Infrastructure.Common;
+using System;
 
 namespace DMP.Ui.Web
 {
@@ -12,7 +8,24 @@ namespace DMP.Ui.Web
 
         protected void Application_Start(object sender, EventArgs e)
         {
+            string modelsFolder = Server.MapPath("~/Resources/Models");
+            if (!DirectoryUtils.Exists(modelsFolder))
+            {
+                DirectoryUtils.Create(modelsFolder);
+            }
+            else
+            {
+                string[] moduleFolders = DirectoryUtils.GetDirectories(modelsFolder);
+                if (moduleFolders != null && moduleFolders.Length > 0)
+                {
+                    foreach(string moduleFolder in moduleFolders)
+                    {
 
+                    }
+                }
+
+            }
+            //Directory.GetDirectories(Server.MapPath("/hvtimg\\"));
         }
 
         protected void Session_Start(object sender, EventArgs e)

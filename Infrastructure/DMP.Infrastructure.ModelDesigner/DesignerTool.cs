@@ -207,7 +207,7 @@ namespace DMP.Infrastructure.ModelDesigner
                 switch (toolStripDropDownItem.Tag.ToString())
                 {
                     case StaticValue.Add:
-                        { 
+                        {
                             if (StaticValue.PrjReportsNodeName.Equals(nodeRightMenu.Tag.ToString()))
                             {
                                 CreateNewReportModel();
@@ -228,16 +228,16 @@ namespace DMP.Infrastructure.ModelDesigner
                         {
                             if (StaticValue.PrjReportsNodeName.Equals(nodeRightMenu.Tag.ToString()))
                             {
-                                
+
                             }
                             else if (StaticValue.ModelTablesNodeName.Equals(nodeRightMenu.Tag.ToString()))
                             {
-                                
+
                                 ModelEdited = true;
                             }
                             else if (StaticValue.ModelColumnsNodeName.Equals(nodeRightMenu.Tag.ToString()))
                             {
-                                
+
                                 ModelEdited = true;
                             }
                         }
@@ -427,7 +427,7 @@ namespace DMP.Infrastructure.ModelDesigner
                     string xml = XmlUtils.Serializer(CurrentModel);
                     //CurrentModel.Name
                     //todo：判断模型文件是否存在 
-                    if (!File.Exists(filePath))
+                    if (File.Exists(filePath))
                     {
                         SaveFile(xml, filePath);
                     }

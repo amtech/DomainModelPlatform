@@ -38,6 +38,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DirectoryUtils.cs" />
     <Compile Include="ElementCollection.cs" />
     <Compile Include="ModelUtils.cs" />
     <Compile Include="Model\BusinessModel.cs" />
