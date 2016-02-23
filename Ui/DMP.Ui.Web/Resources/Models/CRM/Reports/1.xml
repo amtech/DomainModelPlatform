@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <ReportModel SourceTag="1" DocumentType="1" Name="1" DisplayName="1">
   <Tables>
-    <Table Name="NewTable1" DisplayName="NewTable1" IsMain="false" IsVirtual="false">
+    <Table Name="NewTable1" DisplayName="销售明细" IsMain="false" IsVirtual="false">
       <Columns>
-        <Column Name="NewColumn1" ColumnType="String" DisplayName="NewColumn1" IsKey="false" IsVirtual="false" IsSearch="false" />
+        <Column Name="DocNo" FieldName="DocNo" ColumnType="String" DisplayName="单号" IsKey="false" IsVirtual="false" IsSearch="true" />
       </Columns>
     </Table>
   </Tables>

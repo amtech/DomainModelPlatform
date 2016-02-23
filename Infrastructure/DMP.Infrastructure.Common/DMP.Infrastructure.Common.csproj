@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="DirectoryUtils.cs" />
     <Compile Include="ElementCollection.cs" />
+    <Compile Include="FileUtils.cs" />
     <Compile Include="ModelUtils.cs" />
     <Compile Include="Model\BusinessModel.cs" />
     <Compile Include="Model\Elements\Column.cs" />

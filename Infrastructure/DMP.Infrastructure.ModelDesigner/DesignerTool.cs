@@ -391,6 +391,19 @@ namespace DMP.Infrastructure.ModelDesigner
                 {
                     FileStream file = new FileStream(filePath, FileMode.Open);
                     CurrentModel = XmlUtils.Deserialize<ReportModel>(file);
+
+
+                    foreach (var item in CurrentModel.GetType().GetProperties())
+                    {
+                        var v = (DescriptionAttribute[])item.GetCustomAttributes(typeof(DescriptionAttribute), false);
+                        if (v != null && v.Length > 0)
+                        {
+                            var descriptionName = v[0].Description;     
+                        }
+                        
+                    }
+
+
                     file.Close();
                 }
             }

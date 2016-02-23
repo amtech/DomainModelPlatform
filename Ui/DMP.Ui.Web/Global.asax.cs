@@ -1,5 +1,9 @@
 ﻿using DMP.Infrastructure.Common;
 using System;
+using System.Collections.Generic;
+using System.Web.UI.WebControls;
+using DMP.Infrastructure.Common.Model;
+using DMP.Ui.Web.Common;
 
 namespace DMP.Ui.Web
 {
@@ -18,14 +22,33 @@ namespace DMP.Ui.Web
                 string[] moduleFolders = DirectoryUtils.GetDirectories(modelsFolder);
                 if (moduleFolders != null && moduleFolders.Length > 0)
                 {
-                    foreach(string moduleFolder in moduleFolders)
+                    foreach (string moduleFolder in moduleFolders)
                     {
-
+                        string[] businessModels = DirectoryUtils.GetXmlFiles(moduleFolder);
+                        StaticValue.BusinessModels = new Dictionary<string, BusinessModel>();
+                        foreach (string businessModelPath in businessModels)
+                        {
+                            BusinessModel model = XmlUtils.DeserializeFromFile<BusinessModel>(businessModelPath);
+                            StaticValue.BusinessModels.Add(model.SourceTag.ToString() + "_" + model.DocumentType.ToString(), model);
+                        }
+                        string[] reportsFolders = DirectoryUtils.GetDirectories(moduleFolder, "Reports");
+                        if (reportsFolders != null && reportsFolders.Length > 0)
+                        {
+                            string[] reportModels = DirectoryUtils.GetXmlFiles(reportsFolders[0]);
+                            if (reportModels != null && reportModels.Length > 0)
+                            {
+                                StaticValue.ReportModels = new Dictionary<string, ReportModel>();
+                                foreach (string reportModelPath in reportModels)
+                                {
+                                    ReportModel model = XmlUtils.DeserializeFromFile<ReportModel>(reportModelPath);
+                                    StaticValue.ReportModels.Add(model.SourceTag.ToString() + "_" + model.DocumentType.ToString(), model);
+                                }
+                            } 
+                        }
                     }
                 }
 
             }
-            //Directory.GetDirectories(Server.MapPath("/hvtimg\\"));
         }
 
         protected void Session_Start(object sender, EventArgs e)

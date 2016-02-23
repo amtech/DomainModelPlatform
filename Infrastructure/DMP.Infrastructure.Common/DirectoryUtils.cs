@@ -18,16 +18,20 @@ namespace DMP.Infrastructure.Common
             Directory.CreateDirectory(path);
         }
 
-        public static string[] GetDirectories(string path)
+        public static string[] GetDirectories(string path, string subKey = "")
         {
             if (!Exists(path)) return null;
-            return Directory.GetDirectories(path, string.Empty, SearchOption.TopDirectoryOnly);
+            if (!string.IsNullOrEmpty(subKey))
+            {
+                return Directory.GetDirectories(path, subKey);
+            }
+            return Directory.GetDirectories(path);
         }
 
-        public static string[] GetAllDirectories(string path)
+        public static string[] GetAllDirectories(string path, string subKey)
         {
             if (!Exists(path)) return null;
-            return Directory.GetDirectories(path, string.Empty, SearchOption.AllDirectories);
+            return Directory.GetDirectories(path, subKey, SearchOption.AllDirectories);
         }
 
         public static string[] GetXmlFiles(string path)

@@ -10,9 +10,8 @@ namespace DMP.Infrastructure.Common.Model
     public class XmlUtils
     {
         #region 反序列化
-        /// <summary>
-        /// 反序列化
-        /// </summary>
+
+        /// <summary>反序列化</summary>
         /// <param name="type">类型</param>
         /// <param name="xml">XML字符串</param>
         /// <returns></returns>
@@ -21,6 +20,26 @@ namespace DMP.Infrastructure.Common.Model
             try
             {
                 using (StringReader sr = new StringReader(xml))
+                {
+                    XmlSerializer xmldes = new XmlSerializer(typeof(T));
+                    return (T)xmldes.Deserialize(sr);
+                }
+            }
+            catch (Exception e)
+            {
+                return default(T);
+            }
+        }
+
+        /// <summary>反序列化xml文件</summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static T DeserializeFromFile<T>(string path)
+        {
+            try
+            { 
+                using (StringReader sr = new StringReader(FileUtils.ReadTextFile(path)))
                 {
                     XmlSerializer xmldes = new XmlSerializer(typeof(T));
                     return (T)xmldes.Deserialize(sr);
@@ -57,16 +76,9 @@ namespace DMP.Infrastructure.Common.Model
             MemoryStream Stream = new MemoryStream();
             XmlSerializer xml = new XmlSerializer(obj.GetType());
             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-            ns.Add(string.Empty, string.Empty);
-            try
-            {
-                //序列化对象
-                xml.Serialize(Stream, obj, ns);
-            }
-            catch (InvalidOperationException)
-            {
-                throw;
-            }
+            ns.Add(string.Empty, string.Empty); 
+            //序列化对象
+            xml.Serialize(Stream, obj, ns); 
             Stream.Position = 0;
             StreamReader sr = new StreamReader(Stream);
             string str = sr.ReadToEnd();
@@ -78,13 +90,9 @@ namespace DMP.Infrastructure.Common.Model
         }
 
         public static void ReadXml(string path)
-        {
-            System.IO.StreamReader myFile = new System.IO.StreamReader(path,
-                                            System.Text.Encoding.Default);
-            string myString = myFile.ReadToEnd();//myString是读出的字符串
-            myFile.Close();
+        { 
             XmlDocument doc = new XmlDocument();
-            doc.LoadXml(myString);
+            doc.LoadXml(FileUtils.ReadTextFile(path));
         }
 
     }

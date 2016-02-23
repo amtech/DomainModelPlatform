@@ -68,6 +68,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Common\PageUtils.cs" />
+    <Compile Include="Common\StaticValue.cs" />
     <Compile Include="ERP\Reports\SalesDetailReport.aspx.cs">
       <DependentUpon>SalesDetailReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
