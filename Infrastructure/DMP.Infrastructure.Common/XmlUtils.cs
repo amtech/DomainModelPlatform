@@ -59,7 +59,7 @@ namespace DMP.Infrastructure.Common.Model
         /// <returns></returns>
         public static T Deserialize<T>(Stream stream)
         {
-            XmlSerializer xmldes = new XmlSerializer(typeof(T));
+            XmlSerializer xmldes = new XmlSerializer(typeof(T)); 
             return (T)xmldes.Deserialize(stream);
         }
         #endregion

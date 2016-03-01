@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DMP.Infrastructure.Common.Model.Elements;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace DMP.Infrastructure.Common.Model
     }
 
     public class Column
-    { 
+    {
 
         [DescriptionAttribute("名称标识"), CategoryAttribute("基本属性")]
         [XmlAttribute("Name")]
@@ -52,5 +53,9 @@ namespace DMP.Infrastructure.Common.Model
         [DescriptionAttribute("是否用于查询"), CategoryAttribute("基本属性")]
         [XmlAttribute("IsSearch")]
         public bool IsSearch { get; set; }
+
+        [DescriptionAttribute("枚举值"), CategoryAttribute("数据")]
+        [XmlAttribute("Items")]
+        public List<ListItem> Items { get; set; }
     }
 }
