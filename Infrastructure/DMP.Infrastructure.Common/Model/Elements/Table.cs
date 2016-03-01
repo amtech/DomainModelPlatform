@@ -7,8 +7,9 @@ namespace DMP.Infrastructure.Common.Model
 {
     public class Table
     {
-        
+        //[XmlElement("Columns")]
         [BrowsableAttribute(false)]
+        [XmlElement("Columns")]
         public List<Column> Columns { get; set; }
 
         [DescriptionAttribute("名称标识"), CategoryAttribute("基本属性")]

@@ -440,10 +440,7 @@ namespace DMP.Infrastructure.ModelDesigner
                     string xml = XmlUtils.Serializer(CurrentModel);
                     //CurrentModel.Name
                     //todo：判断模型文件是否存在 
-                    if (File.Exists(filePath))
-                    {
-                        SaveFile(xml, filePath);
-                    }
+                    SaveFile(xml, filePath);
                 }
                 //重置编辑状态
                 ModelEdited = false;

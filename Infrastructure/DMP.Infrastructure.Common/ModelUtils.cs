@@ -8,6 +8,16 @@ namespace DMP.Infrastructure.Common
 {
     public class ModelUtils
     {
+        public void Deserialize(string xml)
+        {
+
+        }
+
+        public string Serializer()
+        {
+            return string.Empty;
+        }
+
         public static Table AddNewTable(DataModel model)
         {
             int maxIndex = 0;

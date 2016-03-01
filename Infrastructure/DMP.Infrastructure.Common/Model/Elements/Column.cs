@@ -55,7 +55,7 @@ namespace DMP.Infrastructure.Common.Model
         public bool IsSearch { get; set; }
 
         [DescriptionAttribute("枚举值"), CategoryAttribute("数据")]
-        [XmlAttribute("Items")]
+        [XmlElement("Items")]
         public List<ListItem> Items { get; set; }
     }
 }
