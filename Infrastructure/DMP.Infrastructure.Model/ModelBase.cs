@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace DMP.Infrastructure.Common.Model
+namespace DMP.Infrastructure.Model
 {
     public abstract class ModelBase
     {

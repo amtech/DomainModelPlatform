@@ -25,7 +25,7 @@ namespace DMP.Infrastructure.Common.Model
                     return (T)xmldes.Deserialize(sr);
                 }
             }
-            catch (Exception e)
+            catch
             {
                 return default(T);
             }
@@ -38,14 +38,14 @@ namespace DMP.Infrastructure.Common.Model
         public static T DeserializeFromFile<T>(string path)
         {
             try
-            { 
+            {
                 using (StringReader sr = new StringReader(FileUtils.ReadTextFile(path)))
                 {
                     XmlSerializer xmldes = new XmlSerializer(typeof(T));
                     return (T)xmldes.Deserialize(sr);
                 }
             }
-            catch (Exception e)
+            catch
             {
                 return default(T);
             }
@@ -59,7 +59,7 @@ namespace DMP.Infrastructure.Common.Model
         /// <returns></returns>
         public static T Deserialize<T>(Stream stream)
         {
-            XmlSerializer xmldes = new XmlSerializer(typeof(T)); 
+            XmlSerializer xmldes = new XmlSerializer(typeof(T));
             return (T)xmldes.Deserialize(stream);
         }
         #endregion
@@ -76,9 +76,9 @@ namespace DMP.Infrastructure.Common.Model
             MemoryStream Stream = new MemoryStream();
             XmlSerializer xml = new XmlSerializer(obj.GetType());
             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-            ns.Add(string.Empty, string.Empty); 
+            ns.Add(string.Empty, string.Empty);
             //序列化对象
-            xml.Serialize(Stream, obj, ns); 
+            xml.Serialize(Stream, obj, ns);
             Stream.Position = 0;
             StreamReader sr = new StreamReader(Stream);
             string str = sr.ReadToEnd();
@@ -90,7 +90,7 @@ namespace DMP.Infrastructure.Common.Model
         }
 
         public static void ReadXml(string path)
-        { 
+        {
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(FileUtils.ReadTextFile(path));
         }

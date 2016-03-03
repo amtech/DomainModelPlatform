@@ -1,9 +1,9 @@
 ﻿using DMP.Infrastructure.Common;
+using DMP.Infrastructure.Common.Model;
+using DMP.Infrastructure.Model;
+using DMP.Ui.Web.Common;
 using System;
 using System.Collections.Generic;
-using System.Web.UI.WebControls;
-using DMP.Infrastructure.Common.Model;
-using DMP.Ui.Web.Common;
 
 namespace DMP.Ui.Web
 {

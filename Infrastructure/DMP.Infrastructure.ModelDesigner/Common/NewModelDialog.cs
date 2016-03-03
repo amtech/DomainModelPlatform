@@ -1,6 +1,8 @@
 ﻿
-using System.Windows.Forms;
 using DMP.Infrastructure.Common.Model;
+using DMP.Infrastructure.Model;
+using DMP.Infrastructure.WindowsForm;
+using System.Windows.Forms;
 
 namespace DMP.Infrastructure.ModelDesigner.Common
 {

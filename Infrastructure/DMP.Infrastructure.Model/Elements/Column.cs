@@ -1,12 +1,11 @@
-﻿using DMP.Infrastructure.Common.Model.Elements;
-using System;
+﻿using DMP.Infrastructure.Model.Editer;
+using DMP.Infrastructure.Model.Elements;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
+using System.Drawing.Design;
 using System.Xml.Serialization;
 
-namespace DMP.Infrastructure.Common.Model
+namespace DMP.Infrastructure.Model
 {
 
     public enum ColumnTypes
@@ -54,8 +53,11 @@ namespace DMP.Infrastructure.Common.Model
         [XmlAttribute("IsSearch")]
         public bool IsSearch { get; set; }
 
+
+
         [DescriptionAttribute("枚举值"), CategoryAttribute("数据")]
         [XmlElement("Items")]
+        [Editor(typeof(ListItemEditer), typeof(UITypeEditor))]
         public List<ListItem> Items { get; set; }
     }
 }

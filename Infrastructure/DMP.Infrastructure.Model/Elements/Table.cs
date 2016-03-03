@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
-namespace DMP.Infrastructure.Common.Model
+namespace DMP.Infrastructure.Model
 {
     public class Table
     {

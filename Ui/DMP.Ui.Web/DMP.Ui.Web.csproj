@@ -98,6 +98,10 @@
       <Project>{d99c4108-7d70-4baf-aee8-9332b529dcf6}</Project>
       <Name>DMP.Infrastructure.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Infrastructure\DMP.Infrastructure.Model\DMP.Infrastructure.Model.csproj">
+      <Project>{c5ce3202-3883-4c5e-9c93-5a2c897401ab}</Project>
+      <Name>DMP.Infrastructure.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

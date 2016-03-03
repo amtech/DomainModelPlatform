@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using DMP.Infrastructure.WindowsForm;
+using System;
 using System.Windows.Forms;
-using System.IO;
 
 namespace DMP.Infrastructure.ModelDesigner.Common
 {

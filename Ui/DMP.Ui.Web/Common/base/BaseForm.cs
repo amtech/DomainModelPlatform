@@ -1,10 +1,9 @@
-﻿using DMP.Infrastructure.Common.Model;
-using System.Web.UI;
-using System;
+﻿using DMP.Infrastructure.Common.Transfer;
+using DMP.Infrastructure.Model;
 using Newtonsoft.Json;
+using System;
 using System.IO;
-using System.Web.UI.HtmlControls;
-using DMP.Infrastructure.Common.Transfer;
+using System.Web.UI;
 
 namespace DMP.Ui.Web.Common
 {

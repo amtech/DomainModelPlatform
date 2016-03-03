@@ -42,7 +42,7 @@ namespace DMP.Infrastructure.ModelDesigner.Common
                 rootProject.AppendChild(reports);
 
                 //Business 
-                doc.Save(fullName); 
+                doc.Save(fullName);
                 CreatePrjFolder(projectFolder);
                 return fullName;
             }
@@ -63,7 +63,7 @@ namespace DMP.Infrastructure.ModelDesigner.Common
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                Filter = string.Format("项目文件(*{0})|*{0}", ProjectFilePostfix) 
+                Filter = string.Format("项目文件(*{0})|*{0}", ProjectFilePostfix)
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -106,6 +106,24 @@ namespace DMP.Infrastructure.ModelDesigner.Common
         }
 
         #endregion
+
+        public static string GetSaveXmlPath()
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "xml文件(*.xml)|";
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                return sfd.FileName;
+            }
+            return string.Empty;
+        }
+
+        public static void SaveFile(string p_Text, string p_Path)
+        {
+            StreamWriter _StreamWriter = new StreamWriter(p_Path);
+            _StreamWriter.Write(p_Text);
+            _StreamWriter.Close();
+        }
 
     }
 }

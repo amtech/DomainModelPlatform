@@ -1,18 +1,15 @@
 ﻿using DMP.Infrastructure.Common;
 using DMP.Infrastructure.Common.Model;
+using DMP.Infrastructure.Common.Xml;
+using DMP.Infrastructure.Model;
 using DMP.Infrastructure.ModelDesigner.Common;
+using DMP.Infrastructure.WindowsForm;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Configuration;
-using System.Data;
-using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Xml;
-using DMP.Infrastructure.Common.Xml;
-using System.IO;
 
 namespace DMP.Infrastructure.ModelDesigner
 {
@@ -398,9 +395,9 @@ namespace DMP.Infrastructure.ModelDesigner
                         var v = (DescriptionAttribute[])item.GetCustomAttributes(typeof(DescriptionAttribute), false);
                         if (v != null && v.Length > 0)
                         {
-                            var descriptionName = v[0].Description;     
+                            var descriptionName = v[0].Description;
                         }
-                        
+
                     }
 
 
@@ -440,7 +437,7 @@ namespace DMP.Infrastructure.ModelDesigner
                     string xml = XmlUtils.Serializer(CurrentModel);
                     //CurrentModel.Name
                     //todo：判断模型文件是否存在 
-                    SaveFile(xml, filePath);
+                    Utils.SaveFile(xml, filePath);
                 }
                 //重置编辑状态
                 ModelEdited = false;
