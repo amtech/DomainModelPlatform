@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<ReportModel SourceTag="20001" DocumentType="1" Name="1" DisplayName="1">
+  <Tables>
+    <Table Name="NewTable1" DisplayName="fafa" IsMain="false" IsVirtual="false">
+      <Columns Name="NewColumn1" ColumnType="String" DisplayName="fafa" IsKey="false" IsVirtual="false" IsSearch="true">
+        <Items>
+          <Text>fafa</Text>
+          <Value>fafafa</Value>
+          <IsDefault>true</IsDefault>
+        </Items>
+      </Columns>
+    </Table>
+  </Tables>
+</ReportModel>

@@ -44,19 +44,12 @@
     <Compile Include="DirectoryUtils.cs" />
     <Compile Include="ElementCollection.cs" />
     <Compile Include="FileUtils.cs" />
-    <Compile Include="ModelUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringUtils.cs" />
     <Compile Include="Transfer\RequestPackage.cs" />
     <Compile Include="Transfer\ResponsePackage.cs" />
     <Compile Include="XmlUtils.cs" />
     <Compile Include="Xml\XmlDocumentEx.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DMP.Infrastructure.Model\DMP.Infrastructure.Model.csproj">
-      <Project>{c5ce3202-3883-4c5e-9c93-5a2c897401ab}</Project>
-      <Name>DMP.Infrastructure.Model</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

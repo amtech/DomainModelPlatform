@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.AccessControl;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -12,7 +13,6 @@ namespace DMP.Infrastructure.Common.Model
         #region 反序列化
 
         /// <summary>反序列化</summary>
-        /// <param name="type">类型</param>
         /// <param name="xml">XML字符串</param>
         /// <returns></returns>
         public static T Deserialize<T>(string xml)
@@ -51,70 +51,90 @@ namespace DMP.Infrastructure.Common.Model
             }
         }
 
-        /// <summary>
-        /// 反序列化
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="xml"></param>
+        /// <summary> 反序列化 </summary>
+        /// <param name="stream"></param>
         /// <returns></returns>
         public static T Deserialize<T>(Stream stream)
         {
             XmlSerializer xmldes = new XmlSerializer(typeof(T));
             return (T)xmldes.Deserialize(stream);
         }
+
         #endregion
 
-
-        /// <summary>
-        /// 序列化
-        /// </summary>
-        /// <param name="type">类型</param>
+        /// <summary> 序列化 </summary>
         /// <param name="obj">对象</param>
         /// <returns></returns>
         public static string Serializer(object obj)
         {
-            MemoryStream Stream = new MemoryStream();
+            MemoryStream stream = new MemoryStream();
             XmlSerializer xml = new XmlSerializer(obj.GetType());
             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
             ns.Add(string.Empty, string.Empty);
             //序列化对象
-            xml.Serialize(Stream, obj, ns);
-            Stream.Position = 0;
-            StreamReader sr = new StreamReader(Stream);
+            xml.Serialize(stream, obj, ns);
+            stream.Position = 0;
+            StreamReader sr = new StreamReader(stream);
             string str = sr.ReadToEnd();
-
             sr.Dispose();
-            Stream.Dispose();
-
+            stream.Dispose();
             return str;
         }
 
-        public static void ReadXml(string path)
+        /// <summary> 序列化 </summary>
+        /// <param name="obj">对象</param>
+        /// <returns></returns>
+        public static XmlDocument SerializerToXml(object obj)
+        {
+            MemoryStream stream = new MemoryStream();
+            XmlSerializer xml = new XmlSerializer(obj.GetType());
+            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+            ns.Add(string.Empty, string.Empty);
+            //序列化对象
+            xml.Serialize(stream, obj, ns); 
+            stream.Position = 0;
+            StreamReader sr = new StreamReader(stream);
+            string text = sr.ReadToEnd();
+            sr.Dispose();
+            stream.Dispose();
+            return LoadXml(text);
+        }
+
+        public static XmlDocument ReadXmlFile(string path)
         {
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(FileUtils.ReadTextFile(path));
+            return doc;
         }
+
+        public static XmlDocument LoadXml(string xml)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml);
+            return doc;
+        }
+
+
 
     }
 
     [Serializable]
     public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, IXmlSerializable
     {
-        public SerializableDictionary() { }
         public void WriteXml(XmlWriter write)       // Serializer 
         {
-            XmlSerializer KeySerializer = new XmlSerializer(typeof(TKey));
-            XmlSerializer ValueSerializer = new XmlSerializer(typeof(TValue));
+            XmlSerializer keySerializer = new XmlSerializer(typeof(TKey));
+            XmlSerializer valueSerializer = new XmlSerializer(typeof(TValue));
             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
             ns.Add(string.Empty, string.Empty);
             foreach (KeyValuePair<TKey, TValue> kv in this)
             {
                 write.WriteStartElement("SerializableDictionary");
                 write.WriteStartElement("key");
-                KeySerializer.Serialize(write, kv.Key, ns);
+                keySerializer.Serialize(write, kv.Key, ns);
                 write.WriteEndElement();
                 write.WriteStartElement("value");
-                ValueSerializer.Serialize(write, kv.Value, ns);
+                valueSerializer.Serialize(write, kv.Value, ns);
                 write.WriteEndElement();
                 write.WriteEndElement();
             }
@@ -123,16 +143,16 @@ namespace DMP.Infrastructure.Common.Model
         public void ReadXml(XmlReader reader)       // Deserializer
         {
             reader.Read();
-            XmlSerializer KeySerializer = new XmlSerializer(typeof(TKey));
-            XmlSerializer ValueSerializer = new XmlSerializer(typeof(TValue));
+            XmlSerializer keySerializer = new XmlSerializer(typeof(TKey));
+            XmlSerializer valueSerializer = new XmlSerializer(typeof(TValue));
             while (reader.NodeType != XmlNodeType.EndElement)
             {
                 reader.ReadStartElement("SerializableDictionary");
                 reader.ReadStartElement("key");
-                TKey tk = (TKey)KeySerializer.Deserialize(reader);
+                TKey tk = (TKey)keySerializer.Deserialize(reader);
                 reader.ReadEndElement();
                 reader.ReadStartElement("value");
-                TValue vl = (TValue)ValueSerializer.Deserialize(reader);
+                TValue vl = (TValue)valueSerializer.Deserialize(reader);
                 reader.ReadEndElement();
                 reader.ReadEndElement();
                 Add(tk, vl);

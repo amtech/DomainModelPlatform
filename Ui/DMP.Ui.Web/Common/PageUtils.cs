@@ -24,7 +24,7 @@ namespace DMP.Ui.Web.Common
             myCss.TagName = "link";
             myCss.Attributes.Add("type", "text/css");
             myCss.Attributes.Add("rel", "stylesheet");
-            myCss.Attributes.Add("src", page.ResolveClientUrl(cssPath));
+            myCss.Attributes.Add("href", page.ResolveClientUrl(cssPath));
             page.Header.Controls.Add(myCss);
         }
 

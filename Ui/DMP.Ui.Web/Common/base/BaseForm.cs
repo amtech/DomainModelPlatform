@@ -2,8 +2,11 @@
 using DMP.Infrastructure.Model;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Web.UI;
+using DMP.Infrastructure.Common;
+using DMP.Infrastructure.Common.Model;
 
 namespace DMP.Ui.Web.Common
 {
@@ -38,16 +41,15 @@ namespace DMP.Ui.Web.Common
         }
 
         /// <summary>添加js引用</summary>
-        /// <param name="jsPath"></param>
         private void AddJs()
         {
             PageUtils.AddJs(Page, "~/Resources/Js/jquery-1.11.3.min.js");
-            PageUtils.AddJs(Page, "~/Resources/Js/ui.form.base.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/json2.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/Form/ui.form.base.js");
             AfterAddJs();
         }
 
         /// <summary>添加css引用</summary>
-        /// <param name="cssPath"></param>
         private void AddCss()
         {
             AfterAddCss();
@@ -85,6 +87,8 @@ namespace DMP.Ui.Web.Common
         private ResponsePackage GetModelInfo(RequestPackage reqPackage)
         {
             ResponsePackage rspPackage = new ResponsePackage();
+            string model = JsonConvert.SerializeObject(ModelInfo);
+            rspPackage.Items.Add("model", model);
             AfterGetModelInfo(reqPackage, rspPackage);
             return rspPackage;
         }
@@ -106,14 +110,32 @@ namespace DMP.Ui.Web.Common
         {
             get
             {
-                return new ReportModel();
+                return StaticValue.ReportModels[SourceTag.ToStr() + "_" + DocumentType.ToStr()];
             }
+        }
+
+        protected override void AfterAddCss()
+        {
+            base.AfterAddCss();
+            PageUtils.AddCss(Page, "~/Resources/Css/webnewindex.css");
         }
 
         protected override void AfterAddJs()
         {
             base.AfterAddJs();
-            PageUtils.AddJs(Page, "~/Resources/Js/ui.form.report.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/jsrender.min.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/bootstrap.min.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/flexbox.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/bootstrap-multiselect.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/jqgrid/jquery.jqGrid.min.js"); 
+            PageUtils.AddJs(Page, "~/Resources/Js/jqgrid/i18n/grid.locale-cn.js"); 
+            PageUtils.AddJs(Page, "~/Resources/Js/bootstrap-datepicker.js"); 
+            PageUtils.AddJs(Page, "~/Resources/Js/locales/bootstrap-datepicker.zh-CN.js");  
+
+
+            PageUtils.AddJs(Page, "~/Resources/Js/Form/ui.form.report.js");
+
+
         }
     }
 }

@@ -37,10 +37,6 @@ namespace DMP.Infrastructure.Model
         [XmlAttribute("ColumnType")]
         public ColumnTypes ColumnType { get; set; }
 
-        [DescriptionAttribute("显示名称"), CategoryAttribute("基本属性")]
-        [XmlAttribute("DisplayName")]
-        public string DisplayName { get; set; }
-
         [DescriptionAttribute("是否主键"), CategoryAttribute("基本属性")]
         [XmlAttribute("IsKey")]
         public bool IsKey { get; set; }
@@ -49,15 +45,29 @@ namespace DMP.Infrastructure.Model
         [XmlAttribute("IsVirtual")]
         public bool IsVirtual { get; set; }
 
-        [DescriptionAttribute("是否用于查询"), CategoryAttribute("基本属性")]
+        [DescriptionAttribute("是否可见"), CategoryAttribute("显示")]
+        [XmlAttribute("Visible")] 
+        public bool Visible { get; set; }
+
+        [DescriptionAttribute("显示名称"), CategoryAttribute("显示")]
+        [XmlAttribute("DisplayName")]
+        public string DisplayName { get; set; }
+
+        [DescriptionAttribute("是否用于查询"), CategoryAttribute("查询")]
         [XmlAttribute("IsSearch")]
         public bool IsSearch { get; set; }
 
-
-
-        [DescriptionAttribute("枚举值"), CategoryAttribute("数据")]
+        [DescriptionAttribute("枚举值"), CategoryAttribute("查询")]
         [XmlElement("Items")]
         [Editor(typeof(ListItemEditer), typeof(UITypeEditor))]
         public List<ListItem> Items { get; set; }
+
+        [DescriptionAttribute("能否多选"), CategoryAttribute("查询")]
+        [XmlElement("IsMulti")] 
+        public bool IsMulti { get; set; }
+
+        
+
+
     }
 }

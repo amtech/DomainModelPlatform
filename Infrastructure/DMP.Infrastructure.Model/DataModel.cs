@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace DMP.Infrastructure.Model
@@ -17,9 +14,11 @@ namespace DMP.Infrastructure.Model
             foreach (Table tbl in Tables)
             {
                 if (tbl.Name == tableName)
-                { return tbl; }
+                {
+                    return tbl;
+                }
             }
             return null;
-        } 
+        }
     }
 }

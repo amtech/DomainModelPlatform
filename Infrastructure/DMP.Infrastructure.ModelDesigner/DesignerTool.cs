@@ -1,6 +1,7 @@
 ﻿using DMP.Infrastructure.Common;
 using DMP.Infrastructure.Common.Model;
 using DMP.Infrastructure.Common.Xml;
+using DMP.Infrastructure.Mode;
 using DMP.Infrastructure.Model;
 using DMP.Infrastructure.ModelDesigner.Common;
 using DMP.Infrastructure.WindowsForm;
@@ -380,10 +381,10 @@ namespace DMP.Infrastructure.ModelDesigner
         /// <param name="node"></param>
         private void OnModelSelected(TreeNode node)
         {
-            if ("Reports".Equals(StringUtils.ToString(node.Parent.Tag), StringComparison.OrdinalIgnoreCase))
+            if ("Reports".Equals(StringUtils.ToStr(node.Parent.Tag), StringComparison.OrdinalIgnoreCase))
             {
                 string projectFolder = ProjectContent.DocumentElement.Attributes["Folder"].Value;
-                string filePath = projectFolder + "Reports\\" + StringUtils.ToString(node.Tag) + ".xml";
+                string filePath = projectFolder + "Reports\\" + StringUtils.ToStr(node.Tag) + ".xml";
                 if (File.Exists(filePath))
                 {
                     FileStream file = new FileStream(filePath, FileMode.Open);

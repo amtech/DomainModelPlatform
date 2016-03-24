@@ -17,5 +17,10 @@ namespace DMP.Ui.Web.ERP.Reports
             base.AfterGetModelInfo(reqPackag, rspPackage);
         }
 
+        protected override void AfterAddJs()
+        {
+            base.AfterAddJs();
+            PageUtils.AddJs(Page, "~/Resources/Js/date/base_main_data.js");
+        }
     }
 }

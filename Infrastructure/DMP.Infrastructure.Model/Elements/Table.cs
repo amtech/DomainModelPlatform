@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
@@ -7,7 +6,6 @@ namespace DMP.Infrastructure.Model
 {
     public class Table
     {
-        //[XmlElement("Columns")]
         [BrowsableAttribute(false)]
         [XmlElement("Columns")]
         public List<Column> Columns { get; set; }
@@ -42,7 +40,9 @@ namespace DMP.Infrastructure.Model
             foreach (Column col in Columns)
             {
                 if (col.Name == colName)
-                { return col; }
+                {
+                    return col;
+                }
             }
             return null;
         }

@@ -11,8 +11,6 @@ namespace DMP.Infrastructure.WindowsForm
             StartPosition = FormStartPosition.CenterScreen;
         }
 
-        
-
         protected void Alert(string msg)
         {
             MessageBox.Show(msg, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);

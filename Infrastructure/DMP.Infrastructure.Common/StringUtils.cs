@@ -5,9 +5,9 @@ using System.Text;
 
 namespace DMP.Infrastructure.Common
 {
-    public class StringUtils
+    public static class StringUtils
     {
-        public static string ToString(object obj)
+        public static string ToStr(this object obj)
         {
             if (obj is string)
             {

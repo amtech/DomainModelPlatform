@@ -1,11 +1,6 @@
-﻿using DMP.Infrastructure.Common.Model;
-using DMP.Infrastructure.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using DMP.Infrastructure.Model;
 
-namespace DMP.Infrastructure.Common
+namespace DMP.Infrastructure.Mode
 {
     public class ModelUtils
     {

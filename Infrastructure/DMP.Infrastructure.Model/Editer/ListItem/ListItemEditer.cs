@@ -15,8 +15,12 @@ namespace DMP.Infrastructure.Model.Editer
         public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
         {
             IWindowsFormsEditorService service = provider.GetService(typeof(IWindowsFormsEditorService)) as IWindowsFormsEditorService;
-            Form editForm = new Form() { Text = "To be implemented" };
-            service.ShowDialog(editForm);
+            ListItemEditerForm editForm = new ListItemEditerForm { Text = "To be implemented" };
+            editForm.BindListItems(value);
+            if (service.ShowDialog(editForm) == DialogResult.OK)
+            {
+                value = editForm.ReturnValue;
+            }
             return value;
         }
     }

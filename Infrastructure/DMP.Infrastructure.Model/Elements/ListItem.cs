@@ -12,6 +12,8 @@ namespace DMP.Infrastructure.Model.Elements
 
         public string Value { get; set; }
 
+        public bool IsDefault { get; set; }
+
         public ListItem()
         { }
     }
