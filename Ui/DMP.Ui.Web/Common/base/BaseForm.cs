@@ -123,16 +123,17 @@ namespace DMP.Ui.Web.Common
         protected override void AfterAddJs()
         {
             base.AfterAddJs();
-            PageUtils.AddJs(Page, "~/Resources/Js/jsrender.min.js");
-            PageUtils.AddJs(Page, "~/Resources/Js/bootstrap.min.js");
-            PageUtils.AddJs(Page, "~/Resources/Js/flexbox.js");
-            PageUtils.AddJs(Page, "~/Resources/Js/bootstrap-multiselect.js");
-            PageUtils.AddJs(Page, "~/Resources/Js/jqgrid/jquery.jqGrid.min.js"); 
-            PageUtils.AddJs(Page, "~/Resources/Js/jqgrid/i18n/grid.locale-cn.js"); 
-            PageUtils.AddJs(Page, "~/Resources/Js/bootstrap-datepicker.js"); 
-            PageUtils.AddJs(Page, "~/Resources/Js/locales/bootstrap-datepicker.zh-CN.js");  
+            PageUtils.AddJs(Page, "~/Resources/Js/JsRender/jsrender.min.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/BootStrap/bootstrap.min.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/Jquery.Plugins/jquery.flexbox.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/BootStrap/bootstrap-multiselect.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/JqGrid/jquery.jqGrid.min.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/JqGrid/i18n/grid.locale-cn.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/BootStrap/bootstrap-datepicker.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/BootStrap/Locales/bootstrap-datepicker.zh-CN.js");
 
-
+            PageUtils.AddJs(Page, "~/Resources/Js/JsRender/Tmpls/ctrls.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/JsRender/Tmpls/report.js");
             PageUtils.AddJs(Page, "~/Resources/Js/Form/ui.form.report.js");
 
 

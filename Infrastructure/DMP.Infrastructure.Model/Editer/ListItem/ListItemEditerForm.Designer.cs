@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btnDel = new System.Windows.Forms.Button();
+            this.btnUp = new System.Windows.Forms.Button();
+            this.btnDown = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.btnOk = new System.Windows.Forms.Button();
             this.key = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.is_default = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.btnOk = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,32 +49,35 @@
             this.button1.Text = "+";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnDel
             // 
-            this.button2.Location = new System.Drawing.Point(361, 41);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "-";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnDel.Location = new System.Drawing.Point(361, 41);
+            this.btnDel.Name = "btnDel";
+            this.btnDel.Size = new System.Drawing.Size(75, 23);
+            this.btnDel.TabIndex = 2;
+            this.btnDel.Text = "-";
+            this.btnDel.UseVisualStyleBackColor = true;
+            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
-            // button3
+            // btnUp
             // 
-            this.button3.Location = new System.Drawing.Point(361, 70);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "↑";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnUp.Location = new System.Drawing.Point(361, 70);
+            this.btnUp.Name = "btnUp";
+            this.btnUp.Size = new System.Drawing.Size(75, 23);
+            this.btnUp.TabIndex = 3;
+            this.btnUp.Text = "↑";
+            this.btnUp.UseVisualStyleBackColor = true;
+            this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
             // 
-            // button4
+            // btnDown
             // 
-            this.button4.Location = new System.Drawing.Point(361, 99);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "↓";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnDown.Location = new System.Drawing.Point(361, 99);
+            this.btnDown.Name = "btnDown";
+            this.btnDown.Size = new System.Drawing.Size(75, 23);
+            this.btnDown.TabIndex = 4;
+            this.btnDown.Text = "↓";
+            this.btnDown.UseVisualStyleBackColor = true;
+            this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
             // 
             // dataGridView1
             // 
@@ -88,16 +91,6 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(355, 218);
             this.dataGridView1.TabIndex = 5;
-            // 
-            // btnOk
-            // 
-            this.btnOk.Location = new System.Drawing.Point(361, 128);
-            this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 6;
-            this.btnOk.Text = "确认";
-            this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // key
             // 
@@ -114,6 +107,16 @@
             this.is_default.HeaderText = "默认";
             this.is_default.Name = "is_default";
             // 
+            // btnOk
+            // 
+            this.btnOk.Location = new System.Drawing.Point(361, 128);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(75, 23);
+            this.btnOk.TabIndex = 6;
+            this.btnOk.Text = "确认";
+            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            // 
             // ListItemEditerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -121,9 +124,9 @@
             this.ClientSize = new System.Drawing.Size(459, 279);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnDown);
+            this.Controls.Add(this.btnUp);
+            this.Controls.Add(this.btnDel);
             this.Controls.Add(this.button1);
             this.Name = "ListItemEditerForm";
             this.Text = "ListItemEditerForm";
@@ -134,9 +137,9 @@
 
         #endregion
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnDel;
+        private System.Windows.Forms.Button btnUp;
+        private System.Windows.Forms.Button btnDown;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.DataGridViewTextBoxColumn key;

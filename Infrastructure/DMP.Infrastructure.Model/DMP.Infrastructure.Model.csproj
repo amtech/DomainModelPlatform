@@ -56,7 +56,6 @@
     <Compile Include="ModelBase.cs" />
     <Compile Include="ModelUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RelationModel.cs" />
     <Compile Include="ReportModel.cs" />
   </ItemGroup>
   <ItemGroup>

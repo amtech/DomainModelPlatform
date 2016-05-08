@@ -11,7 +11,7 @@ var reportForm = new ReportForm();
 $(document).ready(function () {
     reportForm.searchColumns = new Array();
     reportForm.getModelInfo();
-    initUi();
+
 });
 
 //override
@@ -23,6 +23,7 @@ function afterGetModelInfo(result) {
             initColumns(table.Columns);
         }
     }
+    initUi();
 };
 //初始化列集合（筛选条件列集合，展示列集合）
 function initColumns(columns) {
@@ -38,37 +39,127 @@ function initColumns(columns) {
 }
 
 function initUi() {
+
+    //模板拼接
+    var searchColumns = {};
+    searchColumns.items = [];
+
     //画查询区域
     for (var searchColIndex in reportForm.searchColumns) {
-        if (columns.hasOwnProperty(searchColIndex)) {
+        if (reportForm.searchColumns.hasOwnProperty(searchColIndex)) {
             var searchCol = reportForm.searchColumns[searchColIndex];
-            //如果是下拉选项 
+
+            /*
+            String,
+            /// <summary>整型</summary>
+            Int,
+            /// <summary>布尔</summary>
+            Bool,
+            /// <summary>小数</summary>
+            Decimal,
+            /// <summary>日期</summary>
+            Date 
+            */
+            var colType = 'string';
             switch (searchCol.ColumnType) {
-                case "String":
-                    {
-                        if (searchCol.Items && searchCol.Items.length > 0) {
-
-                        } 
-                    }
+                case 0:
+                    colType = 'string';
                     break;
-                case "Int":
-                    {
-                        if (searchCol.Items && searchCol.Items.length > 0) {
-
-                        } 
-                    }
+                case 1:
+                    colType = 'int';
                     break;
-                case "Bool":
-                    {
-                        
-                    }
+                case 2:
+                    colType = 'bool';
                     break;
-                case "Decimal":
+                case 3:
+                    colType = 'decimal';
                     break;
-                case "Date":
+                case 4:
+                    colType = 'date';
                     break;
                 default:
-            } 
+                    colType = 'string';
+                    break;
+            }
+
+            //如果是下拉选项 
+            switch (colType) {
+                case "string":
+                    {
+                        if (searchCol.Items && searchCol.Items.length > 0) {
+                            searchColumns.items.push({
+                                "type": "multiselect",
+                                "contentLabel": "index"
+                            });
+                        }
+                    }
+                    break;
+                case "int":
+                    {
+                        if (searchCol.Items && searchCol.Items.length > 0) {
+                            searchColumns.items.push({
+                                "type": "multiselect",
+                                "contentLabel": "index"
+                            });
+                        }
+                    }
+                    break;
+                case "bool":
+                    {
+                        searchColumns.items.push({
+                            "type": "multiselect",
+                            "contentLabel": "index"
+                        });
+                    }
+                    break;
+                case "decimal":
+                    searchColumns.items.push({
+                        "type": "text",
+                        "contentLabel": "index",
+                        "addclass": "myclass"
+                    });
+                    break;
+                case "date":
+                    searchColumns.items.push({
+                        "type": "time",
+                        "contentid": "datepicker",
+                        "contentLabel": "index"
+                    });
+                    break;
+                default:
+            }
         }
     }
+    $("#searchArea").html($.render.tmplSearchArea(searchColumns));
+    $("#datepicker").datepicker({
+        language: "zh-CN"
+    });
+    $('.control-multiselect').multiselect();
+
+    $.jgrid.defaults.styleUI = 'Bootstrap'; 
+    pageInit();
+    $(".container-fluid").css("height", function () {
+        return $(window).height() - $(this).offset().top;
+    });
+    $(".container-fluid").setflexbox($(".nav.nav-tabs,.nav-tabs-body,.panel,.table-overscroll"));
+    
 }
+
+//模板拼接
+//加载jqgrid start 
+function pageInit() {
+    $("#dataGrid").jqGrid({
+        datatype: "local",
+        autowidth: true,
+        colNames: tableHeadList,
+        colModel: tableHeadBind,
+        rowNum: 10,
+        regional: 'cn',
+        pager: '#gridPager',
+        page: 1
+    });
+    for (var i = 0; i <= mydata.length; i++) {
+        jQuery("#dataGrid").jqGrid('addRowData', i + 1, mydata[i]);
+    }
+    $("#dataGrid").jqGrid('bindKeys');
+};
