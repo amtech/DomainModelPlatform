@@ -1,104 +1,78 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security.AccessControl;
+using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace DMP.Infrastructure.Common.Model
+namespace DMP.Infrastructure.Common
 {
     public class XmlUtils
     {
-        #region 反序列化
-
-        /// <summary>反序列化</summary>
-        /// <param name="xml">XML字符串</param>
-        /// <returns></returns>
-        public static T Deserialize<T>(string xml)
+        public static string Serialize(object obj)
         {
+            return Serialize(obj.GetType(), obj);
+        }
+
+        public static string Serialize<T>(object obj)
+        {
+            return Serialize(typeof(T), obj);
+        }
+
+        public static string Serialize(Type t, object obj)
+        {
+            StringBuilder result = new StringBuilder();
             try
             {
-                using (StringReader sr = new StringReader(xml))
+                XmlSerializer xs = new XmlSerializer(t);
+                using (MemoryStream memoryStream = new MemoryStream())
                 {
-                    XmlSerializer xmldes = new XmlSerializer(typeof(T));
-                    return (T)xmldes.Deserialize(sr);
+                    using (XmlTextWriter xtw = new XmlTextWriter(memoryStream, Encoding.UTF8))
+                    {
+                        XmlSerializerNamespaces xns = new XmlSerializerNamespaces();
+                        xns.Add("", "");
+                        xs.Serialize(xtw, obj, xns);
+                        memoryStream.Seek(0, SeekOrigin.Begin);
+                        using (StreamReader streamReader = new StreamReader(memoryStream, Encoding.UTF8))
+                        {
+                            return streamReader.ReadToEnd();
+                        }
+                    }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                return default(T);
+                Console.WriteLine(ex.Message);
             }
+            return result.ToString();
         }
 
-        /// <summary>反序列化xml文件</summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static T DeserializeFromFile<T>(string path)
+        public static T Deserialize<T>(string content)
         {
-            try
+            return (T)Deserialize(typeof(T), content);
+        }
+
+        public static T Deserialize<T>(FileStream file)
+        {
+            byte[] content = new byte[file.Length];
+
+            for (int i = 0; i < content.Length; i++)
             {
-                using (StringReader sr = new StringReader(FileUtils.ReadTextFile(path)))
-                {
-                    XmlSerializer xmldes = new XmlSerializer(typeof(T));
-                    return (T)xmldes.Deserialize(sr);
-                }
+                content[i] = (byte)file.ReadByte();
             }
-            catch
-            {
-                return default(T);
-            }
+
+            return Deserialize<T>(Encoding.UTF8.GetString(content));
         }
 
-        /// <summary> 反序列化 </summary>
-        /// <param name="stream"></param>
-        /// <returns></returns>
-        public static T Deserialize<T>(Stream stream)
+        public static object Deserialize(Type t, string content)
         {
-            XmlSerializer xmldes = new XmlSerializer(typeof(T));
-            return (T)xmldes.Deserialize(stream);
+            object result = null;
+            XmlSerializer xs = new XmlSerializer(t);
+            result = xs.Deserialize(new StringReader(content));
+            return result;
         }
 
-        #endregion
-
-        /// <summary> 序列化 </summary>
-        /// <param name="obj">对象</param>
-        /// <returns></returns>
-        public static string Serializer(object obj)
-        {
-            MemoryStream stream = new MemoryStream();
-            XmlSerializer xml = new XmlSerializer(obj.GetType());
-            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-            ns.Add(string.Empty, string.Empty);
-            //序列化对象
-            xml.Serialize(stream, obj, ns);
-            stream.Position = 0;
-            StreamReader sr = new StreamReader(stream);
-            string str = sr.ReadToEnd();
-            sr.Dispose();
-            stream.Dispose();
-            return str;
-        }
-
-        /// <summary> 序列化 </summary>
-        /// <param name="obj">对象</param>
-        /// <returns></returns>
-        public static XmlDocument SerializerToXml(object obj)
-        {
-            MemoryStream stream = new MemoryStream();
-            XmlSerializer xml = new XmlSerializer(obj.GetType());
-            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-            ns.Add(string.Empty, string.Empty);
-            //序列化对象
-            xml.Serialize(stream, obj, ns); 
-            stream.Position = 0;
-            StreamReader sr = new StreamReader(stream);
-            string text = sr.ReadToEnd();
-            sr.Dispose();
-            stream.Dispose();
-            return LoadXml(text);
-        }
 
         public static XmlDocument ReadXmlFile(string path)
         {
@@ -113,8 +87,6 @@ namespace DMP.Infrastructure.Common.Model
             doc.LoadXml(xml);
             return doc;
         }
-
-
 
     }
 

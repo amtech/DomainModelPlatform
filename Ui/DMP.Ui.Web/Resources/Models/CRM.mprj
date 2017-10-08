@@ -1,6 +1,0 @@
-<Project Name="CRM" Folder="E:\code\DomainModelPlatform\Ui\DMP.Ui.Web\Resources\Models\CRM\" DisplayName="客户关系管理">
-  <Business />
-  <Reports>
-    <Report Name="1" DisplayName="1" Path="E:\code\DomainModelPlatform\Ui\DMP.Ui.Web\Resources\Models\CRM\Reports\1.xml" />
-  </Reports>
-</Project>

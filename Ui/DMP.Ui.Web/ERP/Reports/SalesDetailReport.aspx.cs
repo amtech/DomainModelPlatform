@@ -1,5 +1,5 @@
 ﻿using DMP.Infrastructure.Common.Transfer;
-using DMP.Ui.Web.Common;
+using DMP.Ui.Web.Common; 
 
 namespace DMP.Ui.Web.ERP.Reports
 {
@@ -19,8 +19,7 @@ namespace DMP.Ui.Web.ERP.Reports
 
         protected override void AfterAddJs()
         {
-            base.AfterAddJs();
-            PageUtils.AddJs(Page, "~/Resources/Js/date/base_main_data.js");
+            base.AfterAddJs(); 
         }
     }
 }

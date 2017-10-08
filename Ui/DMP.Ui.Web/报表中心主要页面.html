@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Document</title>
+  <link rel="stylesheet" href="../css/webnewindex.css">
+  <script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+  <script src="../js//jsrender.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script src="../js/flexbox.js"></script>
+  <script type="text/javascript" src="../js/bootstrap-multiselect.js"></script>
+  <script type="text/javascript" src="../js/jqgrid/jquery.jqGrid.min.js"></script>
+  <script type="text/javascript" src="../js/jqgrid/i18n/grid.locale-cn.js"></script>
+  <script type="text/javascript" src="../js/bootstrap-datepicker.js"></script>
+  <script type="text/javascript" src="../js/locales/bootstrap-datepicker.zh-CN.js"></script>
+  <!-- 模板区 -->
+  <script type="text/javascript" src="../js/pageinit.js"></script>
+  <script type="text/javascript" src="../template/bs_form_fixwidth.js"></script>
+  <script type="text/javascript" src="../template/report_head_tmpl.js"></script>
+  <!-- 数据区 -->
+  <script type="text/javascript" src="../data/base_main_data.js"></script>
+  <script type="text/javascript">
+    //模板拼接
+    var headindex = [{
+      type: "input",
+      content_label: "index",
+      addclass: "myclass",
+      events: [{
+        eventtype: "click",
+        eventtarget: ".form-control-simplified",
+        eventfunc: function() {
+          alert("!");
+        }
+      }]
+    }, {
+      type: "time",
+      content_label: "index",
+      addclass: "myclass"
+    }, {
+      type: "multiselect",
+      content_label: "index",
+      options: [{
+        "value": "1",
+        "index": "haha"
+      }]
+    }, {
+      type: "input",
+      content_label: "index",
+      addclass: "myclass"
+    }];
+    //模板拼接
+    $(function() {
+      $.pageinit(function() {
+        $(window).on("resize", function() {
+          $(".container-fluid").css("height", function() {
+            return $(window).height() - $(this).offset().top - 5;
+          });
+        });
+        $(".container-fluid").setflexbox($(".nav.nav-tabs,.nav-tabs-body,.panel,.table-overscroll"));
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <ul class="banner-head">
+    <li>客户回款率</li>
+  </ul>
+  <div class="container-fluid">
+    <div class="panel panel-suspend panel-condensed">
+      <div class="panel-body panel-body-condensebottom">
+        <form id="jsrender-head" class="form-fixwidth" action="">
+        </form>
+      </div>
+    </div>
+    <div class="flexbox-index ui-jqgrid-nomargin" rel-flow="1" rel-min-height="200">
+      <table id="fixtable" class="table table-condensed table-striped table-hover">
+
+      </table>
+      <div id="jqGridPager"></div>
+    </div>
+  </div>
+</body>
+
+</html>

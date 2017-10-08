@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -24,8 +25,11 @@ namespace DMP.Infrastructure.Common.Xml
         public override void Load(string filename)
         {
             isLoading = true;
-            base.Load(filename);
-            isLoading = false;
+            if (File.Exists(filename))
+            {
+                base.Load(filename); 
+            }
+            isLoading = false;    
         }
 
         public override void Save(string filename)

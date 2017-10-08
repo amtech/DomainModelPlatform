@@ -1,9 +1,11 @@
 ﻿using DMP.Infrastructure.Common;
-using DMP.Infrastructure.Common.Model;
-using DMP.Infrastructure.Model;
+using Domain.Model;
 using DMP.Ui.Web.Common;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using Domain.Bll.Interface;
 
 namespace DMP.Ui.Web
 {
@@ -28,8 +30,11 @@ namespace DMP.Ui.Web
                         StaticValue.BusinessModels = new Dictionary<string, BusinessModel>();
                         foreach (string businessModelPath in businessModels)
                         {
-                            BusinessModel model = XmlUtils.DeserializeFromFile<BusinessModel>(businessModelPath);
-                            StaticValue.BusinessModels.Add(model.SourceTag.ToString() + "_" + model.DocumentType.ToString(), model);
+                            using (FileStream file = new FileStream(businessModelPath, FileMode.Open))
+                            {
+                                BusinessModel model = ModelUtils.DeserializeModel<BusinessModel>(file);
+                                StaticValue.BusinessModels.Add(model.SourceTag.ToString() + "_" + model.DocumentType.ToString(), model);
+                            }
                         }
                         string[] reportsFolders = DirectoryUtils.GetDirectories(moduleFolder, "Reports");
                         if (reportsFolders != null && reportsFolders.Length > 0)
@@ -40,11 +45,44 @@ namespace DMP.Ui.Web
                                 StaticValue.ReportModels = new Dictionary<string, ReportModel>();
                                 foreach (string reportModelPath in reportModels)
                                 {
-                                    ReportModel model = XmlUtils.DeserializeFromFile<ReportModel>(reportModelPath);
-                                    StaticValue.ReportModels.Add(model.SourceTag.ToString() + "_" + model.DocumentType.ToString(), model);
+                                    using (FileStream file = new FileStream(reportModelPath, FileMode.Open))
+                                    {
+                                        ReportModel model = ModelUtils.DeserializeModel<ReportModel>(file);
+                                        StaticValue.ReportModels.Add(model.SourceTag.ToString() + "_" + model.DocumentType.ToString(), model);
+                                    }
                                 }
-                            } 
+                            }
                         }
+                    }
+                }
+
+            }
+        }
+
+        private void LoadBllClass()
+        {
+            Type[] types = Assembly.LoadFile(@"dllpath").GetTypes();
+            foreach (Type t in types)
+            {
+
+                MemberInfo[] ms = t.GetMembers();
+                foreach (MemberInfo info in ms)
+                {
+                    if (info.MemberType == MemberTypes.Property)
+                    { }
+                    if (info.MemberType == MemberTypes.Method)
+                    { }
+                }
+                //取类上的自定义特性
+                object[] objs = t.GetCustomAttributes(typeof(ModuleAttribute), true);
+                foreach (object obj in objs)
+                {
+                    ModuleAttribute attr = obj as ModuleAttribute;
+                    if (attr != null)
+                    {
+                        //attr.Id;//模块id
+                        StaticValue.Blls.Add(attr.Id, (IBll)t);
+                        break;
                     }
                 }
 

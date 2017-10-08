@@ -1,7 +1,7 @@
 ﻿
 using System.Windows.Forms;
 
-namespace DMP.Infrastructure.ModelDesigner.Common
+namespace Domain.ModelDesigner.Common
 {
     public class TreeViewEx : TreeView
     {
@@ -13,6 +13,20 @@ namespace DMP.Infrastructure.ModelDesigner.Common
                 {
                     return tn;
                 }
+                foreach (TreeNode tnChilds in tn.Nodes)
+                {
+                    if (tnChilds is TreeNodeModelElement)
+                    {
+                        if (tag.Equals((tnChilds as TreeNodeModelElement).ElementName, System.StringComparison.OrdinalIgnoreCase))
+                        {
+                            return tnChilds;
+                        }
+                    }
+                    else if (tag.Equals(tnChilds.Tag.ToString(), System.StringComparison.OrdinalIgnoreCase))
+                    {
+                        return tnChilds;
+                    }
+                }
             }
             return null;
         }
@@ -20,7 +34,6 @@ namespace DMP.Infrastructure.ModelDesigner.Common
         /// <summary> 选中新增的 节点 </summary>
         public void SelectLastAddNode()
         {
-             
             SelectedNode = SelectedNode.Nodes[SelectedNode.Nodes.Count - 1];
         }
 

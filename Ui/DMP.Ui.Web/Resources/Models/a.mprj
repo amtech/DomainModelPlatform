@@ -1,0 +1,8 @@
+<Project Name="a" Folder="E:\code\qpyun_dev\Common\QPYun.Tools.Designer\Ui\DMP.Ui.Web\Resources\Models\a\" DisplayName="a">
+  <Business />
+  <Reports>
+    <Report Name="a" DisplayName="a" Path="E:\code\qpyun_dev\Common\QPYun.Tools.Designer\Ui\DMP.Ui.Web\Resources\Models\a\Reports\a.xml" />
+    <Report Name="2" DisplayName="2" Path="E:\code\qpyun_dev\Common\QPYun.Tools.Designer\Ui\DMP.Ui.Web\Resources\Models\a\Reports\2.xml" />
+    <Report Name="5" DisplayName="5" Path="E:\code\qpyun_dev\Common\QPYun.Tools.Designer\Ui\DMP.Ui.Web\Resources\Models\a\Reports\5.xml" />
+  </Reports>
+</Project>

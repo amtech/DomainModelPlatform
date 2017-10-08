@@ -1,9 +1,9 @@
-﻿using DMP.Infrastructure.ModelDesigner.Common;
+﻿using Domain.ModelDesigner.Common;
 using DMP.Infrastructure.WindowsForm;
-using System;
+using System; 
 using System.Windows.Forms;
 
-namespace DMP.Infrastructure.ModelDesigner
+namespace Domain.ModelDesigner
 {
     /// <summary>主界面</summary>
     public partial class Main : BaseForm
@@ -11,13 +11,21 @@ namespace DMP.Infrastructure.ModelDesigner
         public Main()
         {
             InitializeComponent();
+            SetStatus(string.Empty); 
+        }
+
+        /// <summary>提供给子窗体调用</summary>
+        /// <param name="msg"></param>
+        public void SetStatus(string msg)
+        {
+            lblCurrentState.Text = msg;
         }
 
         /// <summary>打开文件</summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void menuOpenFile_Click(object sender, EventArgs e)
-        { 
+        {
         }
 
         /// <summary>新建文件</summary>
@@ -54,7 +62,7 @@ namespace DMP.Infrastructure.ModelDesigner
                     WindowState = FormWindowState.Maximized
                 };
                 designer.Show();
-            } 
+            }
         }
 
         /// <summary>打开项目</summary>
@@ -72,7 +80,20 @@ namespace DMP.Infrastructure.ModelDesigner
                     WindowState = FormWindowState.Maximized
                 };
                 designer.Show();
-            } 
+            }
+        }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(ConfigHelper.OutFolder))
+            {
+                Alert("请选择输出路径");
+                string outputFolder = Utils.SelectFolder();
+                if (!string.IsNullOrEmpty(outputFolder))
+                {
+                    ConfigHelper.OutFolder = outputFolder;
+                }
+            }
         }
     }
 }

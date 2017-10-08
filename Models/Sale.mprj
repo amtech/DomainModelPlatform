@@ -1,0 +1,6 @@
+﻿<Project Name="Sale" Folder="E:\code\qpyun_dev\Common\QPYun.Tools.Designer\Models\Sale\" DisplayName="Sale">
+  <Business />
+  <Reports>
+    <Report Name="SaleDetail" DisplayName="销售出库明细查询" Path="E:\code\qpyun_dev\Common\QPYun.Tools.Designer\Models\Sale\Reports\SaleDetail.xml" />
+  </Reports>
+</Project>

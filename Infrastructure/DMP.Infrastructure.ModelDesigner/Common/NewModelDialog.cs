@@ -1,10 +1,11 @@
 ﻿
-using DMP.Infrastructure.Common.Model;
-using DMP.Infrastructure.Model;
+using Domain.Model;
 using DMP.Infrastructure.WindowsForm;
 using System.Windows.Forms;
 
-namespace DMP.Infrastructure.ModelDesigner.Common
+using Domain.ModelDesigner.Model;
+
+namespace Domain.ModelDesigner.Common
 {
 
     #region 窗体设计
@@ -57,7 +58,7 @@ namespace DMP.Infrastructure.ModelDesigner.Common
             this.txtDocumentType.Location = new System.Drawing.Point(114, 79);
             this.txtDocumentType.Name = "txtDocumentType";
             this.txtDocumentType.Size = new System.Drawing.Size(190, 21);
-            this.txtDocumentType.TabIndex = 3;
+            this.txtDocumentType.TabIndex = 2;
             // 
             // label2
             // 
@@ -73,7 +74,7 @@ namespace DMP.Infrastructure.ModelDesigner.Common
             this.btnOk.Location = new System.Drawing.Point(245, 169);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 4;
+            this.btnOk.TabIndex = 5;
             this.btnOk.Text = "确定";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -83,7 +84,7 @@ namespace DMP.Infrastructure.ModelDesigner.Common
             this.txtName.Location = new System.Drawing.Point(114, 106);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(190, 21);
-            this.txtName.TabIndex = 6;
+            this.txtName.TabIndex = 3;
             // 
             // label3
             // 
@@ -99,7 +100,7 @@ namespace DMP.Infrastructure.ModelDesigner.Common
             this.txtDisplayName.Location = new System.Drawing.Point(114, 133);
             this.txtDisplayName.Name = "txtDisplayName";
             this.txtDisplayName.Size = new System.Drawing.Size(190, 21);
-            this.txtDisplayName.TabIndex = 8;
+            this.txtDisplayName.TabIndex = 4;
             // 
             // label4
             // 
@@ -129,7 +130,7 @@ namespace DMP.Infrastructure.ModelDesigner.Common
 
         }
 
-        
+
     }
     #endregion
 
@@ -137,7 +138,7 @@ namespace DMP.Infrastructure.ModelDesigner.Common
     {
         public EnumValue.ModelType NewModelType { get; set; }
 
-        public ModelBase Model { get; set; }
+        public DataModel Model { get; set; }
 
         public NewModelDialog()
         {

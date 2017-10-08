@@ -1,4 +1,4 @@
-﻿namespace DMP.Infrastructure.ModelDesigner
+﻿namespace Domain.ModelDesigner
 {
     partial class Main
     {
@@ -34,10 +34,12 @@
             this.menuNewProject = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNewFile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOpen = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuOpenFile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOpenProject = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuOpenFile = new System.Windows.Forms.ToolStripMenuItem();
             this.statusBottom = new System.Windows.Forms.StatusStrip();
+            this.lblCurrentState = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuTop.SuspendLayout();
+            this.statusBottom.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuTop
@@ -65,7 +67,7 @@
             this.menuNewProject,
             this.menuNewFile});
             this.menuNew.Name = "menuNew";
-            this.menuNew.Size = new System.Drawing.Size(152, 22);
+            this.menuNew.Size = new System.Drawing.Size(94, 22);
             this.menuNew.Text = "新建";
             // 
             // menuNewProject
@@ -88,29 +90,37 @@
             this.menuOpenProject,
             this.menuOpenFile});
             this.menuOpen.Name = "menuOpen";
-            this.menuOpen.Size = new System.Drawing.Size(152, 22);
+            this.menuOpen.Size = new System.Drawing.Size(94, 22);
             this.menuOpen.Text = "打开";
-            // 
-            // menuOpenFile
-            // 
-            this.menuOpenFile.Name = "menuOpenFile";
-            this.menuOpenFile.Size = new System.Drawing.Size(152, 22);
-            this.menuOpenFile.Text = "文件";
-            this.menuOpenFile.Click += new System.EventHandler(this.menuOpenFile_Click);
             // 
             // menuOpenProject
             // 
             this.menuOpenProject.Name = "menuOpenProject";
-            this.menuOpenProject.Size = new System.Drawing.Size(152, 22);
+            this.menuOpenProject.Size = new System.Drawing.Size(94, 22);
             this.menuOpenProject.Text = "项目";
             this.menuOpenProject.Click += new System.EventHandler(this.menuOpenProject_Click);
             // 
+            // menuOpenFile
+            // 
+            this.menuOpenFile.Name = "menuOpenFile";
+            this.menuOpenFile.Size = new System.Drawing.Size(94, 22);
+            this.menuOpenFile.Text = "文件";
+            this.menuOpenFile.Click += new System.EventHandler(this.menuOpenFile_Click);
+            // 
             // statusBottom
             // 
+            this.statusBottom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblCurrentState});
             this.statusBottom.Location = new System.Drawing.Point(0, 414);
             this.statusBottom.Name = "statusBottom";
             this.statusBottom.Size = new System.Drawing.Size(698, 22);
             this.statusBottom.TabIndex = 2;
+            // 
+            // lblCurrentState
+            // 
+            this.lblCurrentState.Name = "lblCurrentState";
+            this.lblCurrentState.Size = new System.Drawing.Size(41, 17);
+            this.lblCurrentState.Text = "状态栏";
             // 
             // Main
             // 
@@ -123,8 +133,11 @@
             this.MainMenuStrip = this.menuTop;
             this.Name = "Main";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Main_Load);
             this.menuTop.ResumeLayout(false);
             this.menuTop.PerformLayout();
+            this.statusBottom.ResumeLayout(false);
+            this.statusBottom.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -141,6 +154,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuNew;
         private System.Windows.Forms.ToolStripMenuItem menuNewProject;
         private System.Windows.Forms.ToolStripMenuItem menuNewFile;
+        private System.Windows.Forms.ToolStripStatusLabel lblCurrentState;
     }
 }
 

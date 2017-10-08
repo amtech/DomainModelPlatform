@@ -1,4 +1,4 @@
-﻿namespace DMP.Infrastructure.ModelDesigner.Common
+﻿namespace Domain.ModelDesigner.Common
 {
     partial class NewProjectDialog
     {

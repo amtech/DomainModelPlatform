@@ -1,12 +1,10 @@
 ﻿using DMP.Infrastructure.Common.Transfer;
 using DMP.Infrastructure.Model;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+using System; 
 using System.IO;
 using System.Web.UI;
-using DMP.Infrastructure.Common;
-using DMP.Infrastructure.Common.Model;
+using DMP.Infrastructure.Common; 
 
 namespace DMP.Ui.Web.Common
 {
@@ -125,18 +123,15 @@ namespace DMP.Ui.Web.Common
             base.AfterAddJs();
             PageUtils.AddJs(Page, "~/Resources/Js/JsRender/jsrender.min.js");
             PageUtils.AddJs(Page, "~/Resources/Js/BootStrap/bootstrap.min.js");
-            PageUtils.AddJs(Page, "~/Resources/Js/Jquery.Plugins/jquery.flexbox.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/JQuery.Plugins/jquery.flexbox.js");
             PageUtils.AddJs(Page, "~/Resources/Js/BootStrap/bootstrap-multiselect.js");
             PageUtils.AddJs(Page, "~/Resources/Js/JqGrid/jquery.jqGrid.min.js");
             PageUtils.AddJs(Page, "~/Resources/Js/JqGrid/i18n/grid.locale-cn.js");
             PageUtils.AddJs(Page, "~/Resources/Js/BootStrap/bootstrap-datepicker.js");
-            PageUtils.AddJs(Page, "~/Resources/Js/BootStrap/Locales/bootstrap-datepicker.zh-CN.js");
-
+            PageUtils.AddJs(Page, "~/Resources/Js/BootStrap/Locales/bootstrap-datepicker.zh-CN.js"); 
             PageUtils.AddJs(Page, "~/Resources/Js/JsRender/Tmpls/ctrls.js");
-            PageUtils.AddJs(Page, "~/Resources/Js/JsRender/Tmpls/report.js");
-            PageUtils.AddJs(Page, "~/Resources/Js/Form/ui.form.report.js");
-
-
+            PageUtils.AddJs(Page, "~/Resources/Js/Data/base_main_data.js"); 
+            PageUtils.AddJs(Page, "~/Resources/Js/Form/ui.form.report.js"); 
         }
     }
 }

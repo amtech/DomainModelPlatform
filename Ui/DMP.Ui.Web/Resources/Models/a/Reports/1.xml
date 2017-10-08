@@ -1,0 +1,10 @@
+<ReportModel SourceTag="1" DocumentType="1" Name="1" DisplayName="1">
+  <Table Name="NewTable1" DisplayName="NewTable1" IsMain="false" IsVirtual="false">
+    <Column Name="NewColumn1" ColumnType="String" IsKey="false" IsVirtual="false" IsSearch="false" Visible="false" DisplayName="NewColumn1" />
+    <Column Name="NewColumn2" ColumnType="String" IsKey="false" IsVirtual="false" IsSearch="false" Visible="false" DisplayName="NewColumn2" />
+    <Column Name="NewColumn3" ColumnType="String" IsKey="false" IsVirtual="false" IsSearch="false" Visible="false" DisplayName="NewColumn3" />
+    <Column Name="NewColumn4" ColumnType="String" IsKey="false" IsVirtual="false" IsSearch="false" Visible="false" DisplayName="NewColumn4" />
+    <Column Name="NewColumn5" ColumnType="String" IsKey="false" IsVirtual="false" IsSearch="false" Visible="false" DisplayName="NewColumn5" />
+    <Column Name="NewColumn6" ColumnType="String" IsKey="false" IsVirtual="false" IsSearch="false" Visible="false" DisplayName="NewColumn6" />
+  </Table>
+</ReportModel>

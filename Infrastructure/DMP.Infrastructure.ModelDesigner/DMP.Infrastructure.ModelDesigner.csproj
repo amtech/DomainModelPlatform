@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <StartupObject>DMP.Infrastructure.ModelDesigner.Program</StartupObject>
+  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -33,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,6 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\EnumValue.cs" />
+    <Compile Include="Common\NewColumnRelationshipDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\NewColumnRelationshipDialog.Designer.cs">
+      <DependentUpon>NewColumnRelationshipDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Common\NewModelDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,6 +68,13 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Common\Utils.cs" />
+    <Compile Include="Editer\ListItem\ListItemEditer.cs" />
+    <Compile Include="Editer\ListItem\ListItemEditerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editer\ListItem\ListItemEditerForm.Designer.cs">
+      <DependentUpon>ListItemEditerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,13 +87,20 @@
     <Compile Include="DesignerTool.Designer.cs">
       <DependentUpon>DesignerTool.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\Elements\ColumnEx.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Common\NewColumnRelationshipDialog.resx">
+      <DependentUpon>NewColumnRelationshipDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Common\NewModelDialog.resx">
       <DependentUpon>NewModelDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Common\NewProjectDialog.resx">
       <DependentUpon>NewProjectDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editer\ListItem\ListItemEditerForm.resx">
+      <DependentUpon>ListItemEditerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
@@ -105,19 +129,25 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DMP.Infrastructure.Common\DMP.Infrastructure.Common.csproj">
+      <Project>{D99C4108-7D70-4BAF-AEE8-9332B529DCF6}</Project>
+      <Name>DMP.Infrastructure.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DMP.Infrastructure.Model\DMP.Infrastructure.Model.csproj">
-      <Project>{c5ce3202-3883-4c5e-9c93-5a2c897401ab}</Project>
+      <Project>{C5CE3202-3883-4C5E-9C93-5A2C897401AB}</Project>
       <Name>DMP.Infrastructure.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\DMP.Infrastructure.WindowsForm\DMP.Infrastructure.WindowsForm.csproj">
       <Project>{ce564146-2efc-4233-9180-3694879636ae}</Project>
       <Name>DMP.Infrastructure.WindowsForm</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DMP.Infrastructure.Common\DMP.Infrastructure.Common.csproj">
-      <Project>{d99c4108-7d70-4baf-aee8-9332b529dcf6}</Project>
-      <Name>DMP.Infrastructure.Common</Name>
-    </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System; 
 using System.Windows.Forms;
 
-namespace DMP.Infrastructure.ModelDesigner
+namespace Domain.ModelDesigner
 {
     static class Program
     {

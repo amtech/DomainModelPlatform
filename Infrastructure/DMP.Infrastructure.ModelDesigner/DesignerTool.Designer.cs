@@ -1,6 +1,6 @@
-﻿using DMP.Infrastructure.ModelDesigner.Common;
+﻿using Domain.ModelDesigner.Common;
 
-namespace DMP.Infrastructure.ModelDesigner
+namespace Domain.ModelDesigner
 {
     partial class DesignerTool
     {
@@ -33,9 +33,9 @@ namespace DMP.Infrastructure.ModelDesigner
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DesignerTool));
             this.splitModule = new System.Windows.Forms.SplitContainer();
-            this.treeModule = new DMP.Infrastructure.ModelDesigner.Common.TreeViewEx();
+            this.treeModule = new Domain.ModelDesigner.Common.TreeViewEx();
             this.splitModel = new System.Windows.Forms.SplitContainer();
-            this.treeModel = new DMP.Infrastructure.ModelDesigner.Common.TreeViewEx();
+            this.treeModel = new Domain.ModelDesigner.Common.TreeViewEx();
             this.pgridModelSetting = new System.Windows.Forms.PropertyGrid();
             this.menuOperator = new System.Windows.Forms.ToolStrip();
             this.btnSave = new System.Windows.Forms.ToolStripButton();
@@ -65,8 +65,8 @@ namespace DMP.Infrastructure.ModelDesigner
             // splitModule.Panel2
             // 
             this.splitModule.Panel2.Controls.Add(this.splitModel);
-            this.splitModule.Size = new System.Drawing.Size(706, 442);
-            this.splitModule.SplitterDistance = 192;
+            this.splitModule.Size = new System.Drawing.Size(736, 472);
+            this.splitModule.SplitterDistance = 200;
             this.splitModule.TabIndex = 2;
             // 
             // treeModule
@@ -74,7 +74,7 @@ namespace DMP.Infrastructure.ModelDesigner
             this.treeModule.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeModule.Location = new System.Drawing.Point(0, 0);
             this.treeModule.Name = "treeModule";
-            this.treeModule.Size = new System.Drawing.Size(192, 442);
+            this.treeModule.Size = new System.Drawing.Size(200, 472);
             this.treeModule.TabIndex = 1;
             this.treeModule.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.TreeViewBeforeSelect);
             this.treeModule.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeNodeAfterSelect);
@@ -93,8 +93,8 @@ namespace DMP.Infrastructure.ModelDesigner
             // splitModel.Panel2
             // 
             this.splitModel.Panel2.Controls.Add(this.pgridModelSetting);
-            this.splitModel.Size = new System.Drawing.Size(510, 442);
-            this.splitModel.SplitterDistance = 302;
+            this.splitModel.Size = new System.Drawing.Size(532, 472);
+            this.splitModel.SplitterDistance = 315;
             this.splitModel.TabIndex = 0;
             // 
             // treeModel
@@ -102,7 +102,7 @@ namespace DMP.Infrastructure.ModelDesigner
             this.treeModel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeModel.Location = new System.Drawing.Point(0, 0);
             this.treeModel.Name = "treeModel";
-            this.treeModel.Size = new System.Drawing.Size(302, 442);
+            this.treeModel.Size = new System.Drawing.Size(315, 472);
             this.treeModel.TabIndex = 1;
             this.treeModel.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeNodeAfterSelect);
             this.treeModel.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeNodeMouseClick);
@@ -113,7 +113,7 @@ namespace DMP.Infrastructure.ModelDesigner
             this.pgridModelSetting.ImeMode = System.Windows.Forms.ImeMode.Close;
             this.pgridModelSetting.Location = new System.Drawing.Point(0, 0);
             this.pgridModelSetting.Name = "pgridModelSetting";
-            this.pgridModelSetting.Size = new System.Drawing.Size(204, 442);
+            this.pgridModelSetting.Size = new System.Drawing.Size(213, 472);
             this.pgridModelSetting.TabIndex = 1;
             this.pgridModelSetting.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PropertyGridPropertyValueChanged);
             // 
@@ -123,7 +123,7 @@ namespace DMP.Infrastructure.ModelDesigner
             this.btnSave});
             this.menuOperator.Location = new System.Drawing.Point(0, 0);
             this.menuOperator.Name = "menuOperator";
-            this.menuOperator.Size = new System.Drawing.Size(706, 25);
+            this.menuOperator.Size = new System.Drawing.Size(736, 25);
             this.menuOperator.TabIndex = 3;
             // 
             // btnSave
@@ -165,7 +165,7 @@ namespace DMP.Infrastructure.ModelDesigner
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(706, 467);
+            this.ClientSize = new System.Drawing.Size(736, 497);
             this.Controls.Add(this.splitModule);
             this.Controls.Add(this.menuOperator);
             this.Name = "DesignerTool";

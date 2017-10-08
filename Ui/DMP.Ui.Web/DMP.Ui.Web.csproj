@@ -13,13 +13,14 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DMP.Ui.Web</RootNamespace>
     <AssemblyName>DMP.Ui.Web</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,16 +45,18 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ERP\Reports\SalesDetailReport.aspx" />
@@ -173,22 +176,20 @@
     <Content Include="Resources\Css\skins\square\_all.css" />
     <Content Include="Resources\Css\webnewindex-theme.css" />
     <Content Include="Resources\Css\webnewindex.css" />
-    <Content Include="Resources\Js\date\base_main_data.js" />
+    <Content Include="Resources\Js\Data\base_main_data.js" />
     <Content Include="Resources\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Resources\Js\BootStrap\bootstrap-datepicker.js" />
     <Content Include="Resources\Js\BootStrap\bootstrap-multiselect.js" />
     <Content Include="Resources\Js\BootStrap\bootstrap.min.js" />
-    <Content Include="Resources\Js\fixedheadertable_helper.js" />
-    <Content Include="Resources\Js\Jquery.Plugins\jquery.flexbox.js" />
-    <Content Include="Resources\Js\JqGrid\Changes.txt" />
+    <Content Include="Resources\Js\JQuery.Plugins\jquery.flexbox.js" />
+    <Content Include="Resources\Js\icheck.js" />
+    <Content Include="Resources\Js\ieInputEvent.js" />
+    <Content Include="Resources\Js\inputHelper.js" />
     <Content Include="Resources\Js\JqGrid\i18n\grid.locale-cn.js" />
-    <Content Include="Resources\Js\JqGrid\i18n\grid.locale-en.js" />
-    <Content Include="Resources\Js\JqGrid\install.txt" />
     <Content Include="Resources\Js\JqGrid\jquery.jqGrid.min.js" />
     <Content Include="Resources\Js\json2.js" />
     <Content Include="Resources\Js\JsRender\jsrender.min.js" />
     <Content Include="Resources\Js\JsRender\Tmpls\ctrls.js" />
-    <Content Include="Resources\Js\JsRender\Tmpls\report.js" />
     <Content Include="Resources\Js\BootStrap\Locales\bootstrap-datepicker.en-GB.js" />
     <Content Include="Resources\Js\BootStrap\Locales\bootstrap-datepicker.zh-CN.js" />
     <Content Include="Resources\Js\Form\ui.form.base.js" />
@@ -197,7 +198,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\base\BaseForm.cs">
+    <Compile Include="Common\BaseForm.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Common\PageUtils.cs" />
@@ -227,16 +228,25 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\Images\" />
+    <Folder Include="Resources\data\" />
+    <Folder Include="Resources\Images\icheckplugin\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Domain\Domain.Bll.Interface\Domain.Bll.Interface.csproj">
+      <Project>{10734647-d1e2-420e-a0f3-7004e6cda924}</Project>
+      <Name>Domain.Bll.Interface</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Infrastructure\DMP.Infrastructure.Common\DMP.Infrastructure.Common.csproj">
       <Project>{d99c4108-7d70-4baf-aee8-9332b529dcf6}</Project>
       <Name>DMP.Infrastructure.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Infrastructure\DMP.Infrastructure.Model\DMP.Infrastructure.Model.csproj">
+    <ProjectReference Include="..\..\Domain\Domain.Model\Domain.Model.csproj">
       <Project>{c5ce3202-3883-4c5e-9c93-5a2c897401ab}</Project>
-      <Name>DMP.Infrastructure.Model</Name>
+      <Name>Domain.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infrastructure\DMP.Infrastructure.WindowsForm\DMP.Infrastructure.WindowsForm.csproj">
+      <Project>{CE564146-2EFC-4233-9180-3694879636AE}</Project>
+      <Name>DMP.Infrastructure.WindowsForm</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
