@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using DMP.Infrastructure.Common;
+using Infrastructure.Common;
 using System.Xml.Serialization;
 
 namespace Domain.Model.Elements

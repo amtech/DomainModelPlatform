@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Windows.Forms;
 
-namespace DMP.Infrastructure.WindowsForm
+namespace Infrastructure.WindowsForm
 {
     public class BaseForm : Form
     {

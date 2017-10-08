@@ -1,6 +1,6 @@
 ﻿
 using Domain.Model;
-using DMP.Infrastructure.WindowsForm;
+using Infrastructure.WindowsForm;
 using System.Windows.Forms;
 
 using Domain.ModelDesigner.Model;

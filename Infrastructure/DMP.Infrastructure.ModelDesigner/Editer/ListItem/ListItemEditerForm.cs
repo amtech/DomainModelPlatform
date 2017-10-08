@@ -2,7 +2,7 @@
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using DMP.Infrastructure.Common;
+using Infrastructure.Common;
 
 
 namespace Domain.ModelDesigner.Editer.ListItem

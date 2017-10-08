@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DMP.Infrastructure.Common.Transfer
+namespace Infrastructure.Common.Transfer
 {
     public class RequestPackage
     {

@@ -1,5 +1,5 @@
 ﻿using Domain.Bll.Interface;
-using DMP.Infrastructure.Common.Transfer;
+using Infrastructure.Common.Transfer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +7,13 @@ using System.Text;
 
 namespace Domain.Bll
 {
+    /// <summary>领域模型业务基类</summary>
     public class BaseBll : IBll
     {
         private int moduleId;
+        private RequestPackage request;
+        private ResponsePackage response;
+
         public virtual int ModuleId
         {
             get
@@ -26,12 +30,11 @@ namespace Domain.Bll
         {
             get
             {
-                throw new NotImplementedException();
-            }
-
+                return request;    
+            } 
             set
             {
-                throw new NotImplementedException();
+                request = value;
             }
         }
 
@@ -39,33 +42,32 @@ namespace Domain.Bll
         {
             get
             {
-                throw new NotImplementedException();
+                return response;
             }
-
             set
             {
-                throw new NotImplementedException();
+                response = value;
             }
         }
 
         public virtual void Add()
         {
-            throw new NotImplementedException();
+             
         }
 
         public virtual void Delete()
         {
-            throw new NotImplementedException();
+            
         }
 
         public virtual void Modify()
         {
-            throw new NotImplementedException();
+             
         }
 
         public virtual void Query()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

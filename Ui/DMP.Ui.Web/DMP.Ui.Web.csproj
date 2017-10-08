@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ERP\Reports\SalesDetailReport.aspx" />
+    <Content Include="ERP\Sales\Sallist.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Resources\Css\skins\all.css" />
     <Content Include="Resources\Css\skins\flat\aero%402x.png" />
@@ -210,6 +211,13 @@
     <Compile Include="ERP\Reports\SalesDetailReport.aspx.designer.cs">
       <DependentUpon>SalesDetailReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ERP\Sales\Sallist.aspx.cs">
+      <DependentUpon>Sallist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\Sales\Sallist.aspx.designer.cs">
+      <DependentUpon>Sallist.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -236,17 +244,17 @@
       <Project>{10734647-d1e2-420e-a0f3-7004e6cda924}</Project>
       <Name>Domain.Bll.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Infrastructure\DMP.Infrastructure.Common\DMP.Infrastructure.Common.csproj">
+    <ProjectReference Include="..\..\Infrastructure\DMP.Infrastructure.Common\Infrastructure.Common.csproj">
       <Project>{d99c4108-7d70-4baf-aee8-9332b529dcf6}</Project>
-      <Name>DMP.Infrastructure.Common</Name>
+      <Name>Infrastructure.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Domain\Domain.Model\Domain.Model.csproj">
       <Project>{c5ce3202-3883-4c5e-9c93-5a2c897401ab}</Project>
       <Name>Domain.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Infrastructure\DMP.Infrastructure.WindowsForm\DMP.Infrastructure.WindowsForm.csproj">
+    <ProjectReference Include="..\..\Infrastructure\DMP.Infrastructure.WindowsForm\Infrastructure.WindowsForm.csproj">
       <Project>{CE564146-2EFC-4233-9180-3694879636AE}</Project>
-      <Name>DMP.Infrastructure.WindowsForm</Name>
+      <Name>Infrastructure.WindowsForm</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -1,4 +1,4 @@
-﻿using DMP.Infrastructure.WindowsForm;
+﻿using Infrastructure.WindowsForm;
 using System;
 using System.Windows.Forms;
 

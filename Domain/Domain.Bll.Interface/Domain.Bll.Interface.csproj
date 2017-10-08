@@ -43,9 +43,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Infrastructure\DMP.Infrastructure.Common\DMP.Infrastructure.Common.csproj">
+    <ProjectReference Include="..\..\Infrastructure\DMP.Infrastructure.Common\Infrastructure.Common.csproj">
       <Project>{d99c4108-7d70-4baf-aee8-9332b529dcf6}</Project>
-      <Name>DMP.Infrastructure.Common</Name>
+      <Name>Infrastructure.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

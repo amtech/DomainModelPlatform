@@ -1,4 +1,4 @@
-﻿using DMP.Infrastructure.Common.Transfer;
+﻿using Infrastructure.Common.Transfer;
 using System;
 using System.Collections.Generic;
 using System.Data;

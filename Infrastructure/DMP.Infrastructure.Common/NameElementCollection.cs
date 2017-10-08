@@ -2,7 +2,7 @@
 using System.Collections; 
 using System.Collections.Specialized; 
 
-namespace DMP.Infrastructure.Common
+namespace Infrastructure.Common
 {
 
     public class NameObjectCollection<T> : NameObjectCollectionBase

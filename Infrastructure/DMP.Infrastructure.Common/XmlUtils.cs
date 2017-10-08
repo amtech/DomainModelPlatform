@@ -6,7 +6,7 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace DMP.Infrastructure.Common
+namespace Infrastructure.Common
 {
     public class XmlUtils
     {

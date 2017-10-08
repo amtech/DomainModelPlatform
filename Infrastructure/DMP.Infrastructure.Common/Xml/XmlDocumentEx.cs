@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-namespace DMP.Infrastructure.Common.Xml
+namespace Infrastructure.Common.Xml
 {
     public class XmlDocumentEx : XmlDocument
     {

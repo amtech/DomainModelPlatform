@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace DMP.Infrastructure.Common
+namespace Infrastructure.Common
 {
     public class DirectoryUtils
     {

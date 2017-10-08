@@ -1,4 +1,5 @@
-﻿using DMP.Infrastructure.Common;
+﻿using Infrastructure.Common;
+using Infrastructure.Common.Transfer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,10 @@ namespace Domain.Bll.Erp.Sales
     [Module(Id = 123)]
     public class SalesBll : BaseBll
     {
-
+        public SalesBll()
+        {
+            Request = new RequestPackage();
+            Response = new ResponsePackage();
+        }
     }
 }

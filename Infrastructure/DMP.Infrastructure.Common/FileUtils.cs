@@ -2,7 +2,7 @@
 using System.Text;
 using System.IO;
 
-namespace DMP.Infrastructure.Common
+namespace Infrastructure.Common
 {
     public class FileUtils
     {

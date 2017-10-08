@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 using System.Xml;
-using DMP.Infrastructure.Common;
+using Infrastructure.Common;
 
 namespace Domain.ModelDesigner.Common
 {

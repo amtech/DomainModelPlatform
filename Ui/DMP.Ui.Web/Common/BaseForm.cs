@@ -2,8 +2,8 @@
 using System.IO;
 using System.Web.UI;
 using System.Xml;
-using DMP.Infrastructure.Common;
-using DMP.Infrastructure.Common.Transfer;
+using Infrastructure.Common;
+using Infrastructure.Common.Transfer;
 using Domain.Model;
 using Newtonsoft.Json;
 
@@ -17,7 +17,7 @@ namespace DMP.Ui.Web.Common
 
         public abstract T ModelInfo { get; }
 
-        protected void Page_Load(object sender, EventArgs e)
+        private void Page_Load(object sender, EventArgs e)
         {
             string action = Request["action"] ?? string.Empty;
             if (!string.IsNullOrEmpty(action))
@@ -74,6 +74,9 @@ namespace DMP.Ui.Web.Common
                 case "get_model":
                     rspPackage = GetModelInfo(reqPackage);
                     break;
+                default:
+                    rspPackage = DoOtherAction(reqPackage);
+                    break;
             }
 
             Response.Clear();
@@ -81,6 +84,11 @@ namespace DMP.Ui.Web.Common
             Response.Write(JsonConvert.SerializeObject(rspPackage));
             Response.End();
         }
+
+        /// <summary>由子类完成基类不实现的action</summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        protected abstract ResponsePackage DoOtherAction(RequestPackage request);
 
         /// <summary> 获取模型信息 </summary>
         private ResponsePackage GetModelInfo(RequestPackage reqPackage)
@@ -102,14 +110,14 @@ namespace DMP.Ui.Web.Common
 
     }
 
-    /// <summary>单据页面</summary>
-    public class DocumentForm : BaseForm<ReportModel>
+    /// <summary>列表页面</summary>
+    public class ListForm : BaseForm<BusinessModel>
     {
-        public override ReportModel ModelInfo
+        public override BusinessModel ModelInfo
         {
             get
             {
-                return StaticValue.ReportModels[SourceTag.ToStr() + "_" + DocumentType.ToStr()];
+                throw new NotImplementedException();
             }
         }
 
@@ -133,6 +141,70 @@ namespace DMP.Ui.Web.Common
             PageUtils.AddJs(Page, "~/Resources/Js/JsRender/Tmpls/ctrls.js");
             PageUtils.AddJs(Page, "~/Resources/Js/Data/base_main_data.js");
             PageUtils.AddJs(Page, "~/Resources/Js/Form/ui.form.report.js");
+        }
+
+        private void Query()
+        {
+            if (StaticValue.Blls.ContainsKey(this.SourceTag))
+            {
+                StaticValue.Blls[SourceTag].Query();
+            }
+            AfterQuery();
+        }
+
+        protected virtual void AfterQuery() { }
+
+        protected override ResponsePackage DoOtherAction(RequestPackage request)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>单据页面</summary>
+    public class DocumentForm : BaseForm<BusinessModel>
+    {
+        public override BusinessModel ModelInfo
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        protected override void AfterAddCss()
+        {
+            base.AfterAddCss();
+            PageUtils.AddCss(Page, "~/Resources/Css/webnewindex.css");
+        }
+
+        protected override void AfterAddJs()
+        {
+            base.AfterAddJs();
+            PageUtils.AddJs(Page, "~/Resources/Js/JsRender/jsrender.min.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/BootStrap/bootstrap.min.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/JQuery.Plugins/jquery.flexbox.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/BootStrap/bootstrap-multiselect.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/JqGrid/jquery.jqGrid.min.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/JqGrid/i18n/grid.locale-cn.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/BootStrap/bootstrap-datepicker.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/BootStrap/Locales/bootstrap-datepicker.zh-CN.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/JsRender/Tmpls/ctrls.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/Data/base_main_data.js");
+            PageUtils.AddJs(Page, "~/Resources/Js/Form/ui.form.report.js");
+        }
+
+        protected void Add()
+        { }
+
+        protected void Save()
+        { }
+
+        protected void Delete()
+        { }
+
+        protected override ResponsePackage DoOtherAction(RequestPackage request)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -168,5 +240,14 @@ namespace DMP.Ui.Web.Common
             PageUtils.AddJs(Page, "~/Resources/Js/Data/base_main_data.js");
             PageUtils.AddJs(Page, "~/Resources/Js/Form/ui.form.report.js");
         }
+
+        protected override ResponsePackage DoOtherAction(RequestPackage request)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void Query()
+        { }
+
     }
 }

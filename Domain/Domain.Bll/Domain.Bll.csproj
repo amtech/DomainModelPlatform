@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\Ui\DMP.Ui.Web\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -40,13 +40,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseBll.cs" />
+    <Compile Include="CustomBll.cs" />
     <Compile Include="Erp\Sales\SalesBll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Infrastructure\DMP.Infrastructure.Common\DMP.Infrastructure.Common.csproj">
+    <ProjectReference Include="..\..\Infrastructure\DMP.Infrastructure.Common\Infrastructure.Common.csproj">
       <Project>{d99c4108-7d70-4baf-aee8-9332b529dcf6}</Project>
-      <Name>DMP.Infrastructure.Common</Name>
+      <Name>Infrastructure.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Domain.Bll.Interface\Domain.Bll.Interface.csproj">
       <Project>{10734647-d1e2-420e-a0f3-7004e6cda924}</Project>

@@ -1,4 +1,4 @@
-﻿using DMP.Infrastructure.Common;
+﻿using Infrastructure.Common;
 using System.ComponentModel;
 using System.Xml.Serialization;
 

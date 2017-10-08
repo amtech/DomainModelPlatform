@@ -2,7 +2,7 @@
 using System.Drawing.Design;
 using Domain.ModelDesigner.Editer;
 using Domain.Model.Elements;
-using DMP.Infrastructure.Common;
+using Infrastructure.Common;
 using System.Xml.Serialization;
 
 namespace Domain.ModelDesigner.Model.Elements

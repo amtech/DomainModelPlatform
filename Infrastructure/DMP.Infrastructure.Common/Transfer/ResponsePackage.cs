@@ -1,7 +1,7 @@
 ﻿
 using System.Collections.Generic;
 
-namespace DMP.Infrastructure.Common.Transfer
+namespace Infrastructure.Common.Transfer
 {
     public class ResponsePackage
     { 

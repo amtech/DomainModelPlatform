@@ -1,4 +1,4 @@
-﻿using DMP.Infrastructure.Common;
+﻿using Infrastructure.Common;
 using Domain.Model;
 using DMP.Ui.Web.Common;
 using System;
@@ -13,6 +13,12 @@ namespace DMP.Ui.Web
     {
 
         protected void Application_Start(object sender, EventArgs e)
+        {
+            LoadModels();
+            LoadBllClass();
+        }
+
+        private void LoadModels()
         {
             string modelsFolder = Server.MapPath("~/Resources/Models");
             if (!DirectoryUtils.Exists(modelsFolder))
@@ -61,29 +67,26 @@ namespace DMP.Ui.Web
 
         private void LoadBllClass()
         {
-            Type[] types = Assembly.LoadFile(@"dllpath").GetTypes();
+            StaticValue.Blls = new Dictionary<int, IBll>();
+
+            Type[] types = Assembly.LoadFile(Server.MapPath("/bin/Domain.Bll.dll")).GetTypes();
             foreach (Type t in types)
             {
-
-                MemberInfo[] ms = t.GetMembers();
-                foreach (MemberInfo info in ms)
-                {
-                    if (info.MemberType == MemberTypes.Property)
-                    { }
-                    if (info.MemberType == MemberTypes.Method)
-                    { }
-                }
                 //取类上的自定义特性
                 object[] objs = t.GetCustomAttributes(typeof(ModuleAttribute), true);
                 foreach (object obj in objs)
                 {
-                    ModuleAttribute attr = obj as ModuleAttribute;
-                    if (attr != null)
+                    if (t.GetInterface("IBll") != null)
                     {
-                        //attr.Id;//模块id
-                        StaticValue.Blls.Add(attr.Id, (IBll)t);
-                        break;
-                    }
+                        var bll = (IBll)Activator.CreateInstance(t);
+                        ModuleAttribute attr = obj as ModuleAttribute;
+                        if (attr != null)
+                        {
+                            //attr.Id;//模块id
+                            StaticValue.Blls.Add(attr.Id, bll);
+                            break;
+                        }
+                    } 
                 }
 
             }

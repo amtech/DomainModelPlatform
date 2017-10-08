@@ -1,6 +1,6 @@
 ﻿
 using System.Windows.Forms;
-using DMP.Infrastructure.WindowsForm;
+using Infrastructure.WindowsForm;
 using Domain.Model.Elements;
 
 

@@ -1,8 +1,8 @@
-﻿using DMP.Infrastructure.Common;
-using DMP.Infrastructure.Common.Xml;
+﻿using Infrastructure.Common;
+using Infrastructure.Common.Xml;
 using Domain.Model;
 using Domain.ModelDesigner.Common;
-using DMP.Infrastructure.WindowsForm;
+using Infrastructure.WindowsForm;
 using System;
 using System.IO;
 using System.Linq;

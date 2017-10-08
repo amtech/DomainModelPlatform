@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 
-namespace DMP.Infrastructure.Common
+namespace Infrastructure.Common
 {
     public class MyCollection : NameObjectCollectionBase
     {
